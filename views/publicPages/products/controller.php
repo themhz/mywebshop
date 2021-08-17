@@ -22,20 +22,26 @@ class Controller extends baseController{
     }
 
     public function get(){
-        //echo "this is the products";
-         $p = new Products();
+        
+        $requestparams = $this->app->request->body();
 
+        $params = [];
+         $p = new Products();
+         $sql = "SELECT a.id, a.name, a.description, a.price, a.image, c.name categoryName, c.id categoryId FROM product a 
+         inner join product_categories  b on  a.id = b.product_id
+         inner join categories  c on c.id = b.category_id ";
+
+        if(isset($requestparams['category'])){
+            $sql .= ' where c.id = :category_id';
+            $params = [':category_id' => $requestparams['category']];
+        }
+        //where c.id =:category_id
+
+         $products = $p->customselect($sql, $params);
         
         
-         $products = $p->select();
-        
-        // //$params = $this->app->request->body();
-        // //echo "<pre>";
-        // //print_r($products);
-        // //echo "<pre>";
-        //  //die();
          $view = new view($this->app->request);
-         echo $view->render('main', $this->app->request->path() , $products);
+         echo $view->render('inner', $this->app->request->path() , $products);
     }
 
     public function put(){

@@ -3,9 +3,24 @@
   <div class="container">
     <h1 class="display-3">Products </h1>
     <p>
-    <pre>            
-      <?php print_r($params); ?>
-    <pre>
+    <table class="table">
+
+
+      <?php foreach ($params as $rows) {
+        echo "<tr>";        
+        
+          echo "<td><img style='width:150px;' src='userfiles/$rows->image'/> </td>";
+          echo "<td>$rows->id </td>";
+          echo "<td>$rows->name </td>";
+          echo "<td>$rows->description </td>";
+          echo "<td>$rows->price </td>";          
+        
+        echo "</tr>";
+      }
+      //print_r($params);
+      ?>
+
+    </table>
     </p>
     <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
   </div>

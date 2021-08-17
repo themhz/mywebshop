@@ -71,6 +71,17 @@ class Model
         return $results;
     }
 
+    public function customselect($sql, $params = []): array
+    {
+        
+        $db = Database::getInstance();
+        $sth = $db->dbh->prepare($sql);
+        $sth->execute($params);
+        $results = $sth->fetchAll(\PDO::FETCH_OBJ);
+
+        return $results;
+    }
+
     public function update(): array
     {
         $db = Database::getInstance();
