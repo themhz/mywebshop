@@ -29,7 +29,7 @@ class Controller extends baseController
 
         $view = new view($this->app->request);
 
-        echo $view->render('inner', 'main', [], 'public');
+        echo $view->render('main', 'main', [], 'public');
     }
 
     public function put()

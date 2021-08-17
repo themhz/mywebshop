@@ -1,7 +1,7 @@
 <!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron">
   <div class="container">
-    <h1 class="display-3">Products </h1>
+    <h1 class="display-3">Product </h1>
     <p>
     <table class="table">
 
@@ -9,7 +9,7 @@
       <?php foreach ($params as $rows) {
         echo "<tr>";        
         
-          echo "<td><a href='product?product_id=$rows->id'><img style='width:150px;' src='userfiles/$rows->image'/> </a></td>";
+          echo "<td><img style='width:150px;' src='userfiles/$rows->image'/> </td>";
           echo "<td>$rows->id </td>";
           echo "<td>$rows->name </td>";
           echo "<td>$rows->description </td>";
