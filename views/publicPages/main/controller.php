@@ -21,7 +21,7 @@ class Controller extends baseController
     {
         $target_dir = $this->app->rootpath . DIRECTORY_SEPARATOR . 'SampleWebApp' . DIRECTORY_SEPARATOR . 'userfiles' . DIRECTORY_SEPARATOR;
         $fileUploader = new FileUploader($target_dir);
-        $fileUploader->multiupload();
+        $fileUploader->upload();
     }
 
     public function get()

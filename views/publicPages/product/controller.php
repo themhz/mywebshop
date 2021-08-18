@@ -12,13 +12,7 @@ class Controller extends baseController{
 
     public function post(){        
         
-        echo "this is the products";
-        $p = new Products();
-
-        print_r($p->select());
-        // $params = $this->app->request->body();
-        // $view = new view($this->app);
-        // echo $view->render('main', $this->app->request->path() , $params);
+        echo "this is the products";     
     }
 
     public function get(){
@@ -42,10 +36,10 @@ class Controller extends baseController{
     }
 
     public function put(){
-        echo "put";
+        
     }
 
     public function delete(){
-        echo "delete";
+        
     }
 }
