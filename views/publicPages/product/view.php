@@ -22,6 +22,7 @@
     </table>
     </p>
     <button class="btn btn-primary btn-lg" onclick="addToBasket()">add to basket</button>
+    <a class="btn btn-primary btn-lg" href="basket">go to basket</a>
   </div>
 </div>
 
