@@ -30,10 +30,12 @@
   function addToBasket() {
     let id = '<?= $params[0]->id ?>';
     let name = '<?= $params[0]->name ?>';
+    let price = '<?= $params[0]->price ?>';
     let item = {
       'id': id,
       'name': name,
-      'qty': 1
+      'qty': 1,
+      'price': price
     };
 
     let basket = localStorage.getItem('basket') ? JSON.parse(localStorage.getItem('basket')) : [];

@@ -68,6 +68,13 @@
           </svg>
           <span class="fs-4">e-shop</span>
         </a>
+
+        <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+          <a class="me-3 py-2 text-dark text-decoration-none" href="products">products</a>
+          <a class="me-3 py-2 text-dark text-decoration-none" href="#">Enterprise</a>
+          <a class="me-3 py-2 text-dark text-decoration-none" href="#">Support</a>
+          <a class="py-2 text-dark text-decoration-none" href="#">Pricing</a>
+        </nav>
     </header>
     <main>
       {{VIEW}}
