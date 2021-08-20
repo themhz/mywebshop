@@ -17,16 +17,32 @@
   });
 
   function loadBasket() {
+    var Parent = document.getElementById('basket').tBodies[0];
+    while (Parent.hasChildNodes()) {
+      Parent.removeChild(Parent.firstChild);
+    }
+    //return;
     let basket = localStorage.getItem('basket') ? JSON.parse(localStorage.getItem('basket')) : [];
 
-    addrows(basket, ['id', 'name', 'qty', 'price', 'total'], 'basket');
+    addrows(basket, ['id', 'name', 'qty', 'price', 'total', 'action'], 'basket');
     calculateTotals('basket');
+    addTextAreasAndButtons('basket');
+  }
+
+  function addTextAreasAndButtons(tableid) {
+    var table = document.getElementById(tableid);
+
+    for (let i = 1; i < table.rows.length - 1; i++) {
+      table.rows[i].cells[2].innerHTML = "<input id='" + table.rows[i].cells[0].innerHTML + "' type='text' value='" + table.rows[i].cells[2].innerHTML + "'/>&nbsp;<input type='button' value='update' onclick='updateItem(" + table.rows[i].cells[0].innerHTML + ")'/>";
+      table.rows[i].cells[5].innerHTML = "<input type='button' value='remove' onclick='removeItem(" + table.rows[i].cells[0].innerHTML + ")'/>";
+    }
   }
 
   function calculateTotals(tableid) {
-    var table = document.getElementById(tableid)
+    var table = document.getElementById(tableid);
     let total = 0;
     for (var i = 1, row; row = table.rows[i]; i++) {
+      
       itemTotal = parseFloat(row.cells[2].innerHTML) * parseFloat(row.cells[3].innerHTML);
       total += itemTotal;
       row.cells[4].innerHTML = parseFloat(itemTotal) + '$';
@@ -65,7 +81,7 @@
 
     for (var j = 0; j < data.length; j++) { //Για κάθε εγγραφή μέσα στα δεδομένα που φέραμε σε μορφή json
       var tabLinesRow = tabLines.insertRow(j + 1); //τοποθετούμε μια γραμμή μέσα στον πίνακα
-      for (var i = 0; i < cols.length; i++) { //Για κάθε μια από τις κολόνες μέσα στην λίστα μας
+      for (var i = 0; i < cols.length; i++) { //Για κάθε μια από τις κολόνες μέσα στην λίστα μας       
         var col1 = tabLinesRow.insertCell(cel); //Ε η φάση της τοοποθέτησης
         for (var k = 0; k < Object.keys(data[j]).length; k++) { //Για κάθε κολόνα μέσα στην γραμμή            
 
@@ -92,10 +108,41 @@
         // if(self.onOpenPopup!=null){
         //     self.onOpenPopup(self.selectedrows[0].innerHTML, self);
         // }  
-        alert("clicked");
+        //        alert("clicked");
       });
       cel = 0; //Και μηδενίζουμε την κολόνα για την επόμενη γραμμή
     }
+  }
 
+  function removeItem(id) {
+    
+    let basket = localStorage.getItem('basket') ? JSON.parse(localStorage.getItem('basket')) : [];    
+    for (let i = 0; i < basket.length; i++) {      
+      if (id == basket[i].id) {                
+        basket.splice(i, 1);
+        localStorage.removeItem('basket');
+        localStorage.setItem('basket', JSON.stringify(basket));
+      }    
+    }
+    loadBasket();
+  }
+
+  function updateItem(id) {
+    //alert(document.getElementById(id).value);
+    if(document.getElementById(id).value<=0){
+      alert("qty must be greater than 0");
+      loadBasket();
+      return;
+    }
+    let basket = localStorage.getItem('basket') ? JSON.parse(localStorage.getItem('basket')) : [];
+    for (let i = 0; i < basket.length; i++) {
+      if (id == basket[i].id) {        
+        basket[i].qty = document.getElementById(id).value;
+      }    
+    }
+
+    localStorage.removeItem('basket');
+    localStorage.setItem('basket', JSON.stringify(basket));
+    loadBasket();
   }
 </script>
