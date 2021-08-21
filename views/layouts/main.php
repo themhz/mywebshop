@@ -80,6 +80,9 @@
       {{VIEW}}
     </main>    
   </div>
+
+  <script src="views/layouts/js/basket.js"></script>
+     
 </body>
 
 </html>
