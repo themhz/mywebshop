@@ -1,8 +1,10 @@
 class Basket {
     tableId = "";
+    basketname = ""
     
-    constructor(tableId) {
+    constructor(tableId, basketname="basket") {
         this.tableId = tableId;
+        this.basketname = basketname;
     }
 
 
@@ -12,7 +14,7 @@ class Basket {
             Parent.removeChild(Parent.firstChild);
         }
 
-        let basket = localStorage.getItem('basket') ? JSON.parse(localStorage.getItem('basket')) : [];
+        let basket = localStorage.getItem(this.basketname) ? JSON.parse(localStorage.getItem(this.basketname)) : [];
 
         this.addrows(basket, ['id', 'name', 'qty', 'price', 'total', 'action']);
         this.calculateTotals();
@@ -115,7 +117,6 @@ class Basket {
                 self.updateItem(table.rows[i].cells[0].innerHTML);
             }
             table.rows[i].cells[2].appendChild(updatebtn);
-
             
             var removebtn = document.createElement("input");
             removebtn.type = "button";
@@ -123,19 +124,18 @@ class Basket {
             removebtn.onclick = function(){
                 self.removeItem(table.rows[i].cells[0].innerHTML);
             }
-            table.rows[i].cells[5].appendChild(removebtn);
-            ///table.rows[i].cells[5].innerHTML = "<input type='button' value='remove' onclick='removeItem(" + table.rows[i].cells[0].innerHTML + ")'/>";
+            table.rows[i].cells[5].appendChild(removebtn);        
         }
     }
 
     removeItem(id) {
 
-        let basket = localStorage.getItem('basket') ? JSON.parse(localStorage.getItem('basket')) : [];
+        let basket = localStorage.getItem(this.basketname) ? JSON.parse(localStorage.getItem(this.basketname)) : [];
         for (let i = 0; i < basket.length; i++) {
             if (id == basket[i].id) {
                 basket.splice(i, 1);
-                localStorage.removeItem('basket');
-                localStorage.setItem('basket', JSON.stringify(basket));
+                localStorage.removeItem(this.basketname);
+                localStorage.setItem(this.basketname, JSON.stringify(basket));
             }
         }
         this.loadBasket();
@@ -149,15 +149,15 @@ class Basket {
             this.loadBasket();
             return;
         }
-        let basket = localStorage.getItem('basket') ? JSON.parse(localStorage.getItem('basket')) : [];
+        let basket = localStorage.getItem(this.basketname) ? JSON.parse(localStorage.getItem(this.basketname)) : [];
         for (let i = 0; i < basket.length; i++) {
             if (id == basket[i].id) {
                 basket[i].qty = document.getElementById(id).value;
             }
         }
 
-        localStorage.removeItem('basket');
-        localStorage.setItem('basket', JSON.stringify(basket));
+        localStorage.removeItem(this.basketname);
+        localStorage.setItem(this.basketname, JSON.stringify(basket));
         this.loadBasket();
     }
 
