@@ -39,13 +39,16 @@ class Router
     {
         
         try {            
-            if (!$this->checkIfPageIsAdmin()) {                
+            if (!$this->checkIfPageIsAdmin()) {    
+                              
                 $controller = '\mywebshop\views\publicPages\\' . $this->getController() . '\Controller';
+                
                 $this->loadController($controller);
             } else if ($this->app->session->get('user')->isloggedin && $this->userCanAccess()) {
-                $controller = '\mywebshop\views\adminPages\\' . $this->getAdminPath() . '\Controller';                
+                $controller = '\mywebshop\views\adminPages\\' . $this->getAdminPath() . '\Controller';   
+                      
                 $this->loadController($controller);
-                
+               
             } else {
                 $this->app->response->setStatusCode(403);
                 $this->app->error = "You can't access this page";
@@ -73,6 +76,7 @@ class Router
             $controller->$method();
             
         }else{
+            
             $method = $this->method;
             $controller->$method();
         }        

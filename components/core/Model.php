@@ -73,10 +73,14 @@ class Model
 
     public function customselect($sql, $params = []): array
     {
+    
         
         $db = Database::getInstance();
+       
         $sth = $db->dbh->prepare($sql);
+        
         $sth->execute($params);
+        
         $results = $sth->fetchAll(\PDO::FETCH_OBJ);
 
         return $results;

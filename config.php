@@ -5,5 +5,4 @@ define('CONFIG', array(
     'db.password' => '',
     'db.host' => 'localhost',
     'db.name' => 'mywebshop',
-
 ));

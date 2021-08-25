@@ -1,5 +1,6 @@
 class Basket {
     tableId = "";
+    
     constructor(tableId) {
         this.tableId = tableId;
     }
@@ -98,8 +99,32 @@ class Basket {
         var table = document.getElementById(this.tableId);
 
         for (let i = 1; i < table.rows.length - 1; i++) {
-            table.rows[i].cells[2].innerHTML = "<input id='" + table.rows[i].cells[0].innerHTML + "' type='text' value='" + table.rows[i].cells[2].innerHTML + "'/>&nbsp;<input type='button' value='update' onclick='updateItem(" + table.rows[i].cells[0].innerHTML + ")'/>";
-            table.rows[i].cells[5].innerHTML = "<input type='button' value='remove' onclick='removeItem(" + table.rows[i].cells[0].innerHTML + ")'/>";
+            var input = document.createElement("input");
+            input.type = "text";
+            input.id = table.rows[i].cells[0].innerHTML;
+            input.value = table.rows[i].cells[2].innerHTML;
+           
+            table.rows[i].cells[2].appendChild(input);
+
+            var updatebtn = document.createElement("input");
+            updatebtn.type = "button";
+            updatebtn.value = "update";
+            
+            self = this;
+            updatebtn.onclick = function(){               
+                self.updateItem(table.rows[i].cells[0].innerHTML);
+            }
+            table.rows[i].cells[2].appendChild(updatebtn);
+
+            
+            var removebtn = document.createElement("input");
+            removebtn.type = "button";
+            removebtn.value = "remove";
+            removebtn.onclick = function(){
+                self.removeItem(table.rows[i].cells[0].innerHTML);
+            }
+            table.rows[i].cells[5].appendChild(removebtn);
+            ///table.rows[i].cells[5].innerHTML = "<input type='button' value='remove' onclick='removeItem(" + table.rows[i].cells[0].innerHTML + ")'/>";
         }
     }
 

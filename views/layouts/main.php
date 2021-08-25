@@ -44,7 +44,7 @@
 
 
   <!-- Custom styles for this template -->
-  <link href="pricing.css" rel="stylesheet">
+  <!-- <link href="pricing.css" rel="stylesheet"> -->
 
 
 </head>

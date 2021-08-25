@@ -23,6 +23,7 @@ class Controller extends baseController{
 
     public function get(){
         
+       
         $requestparams = $this->app->request->body();
 
         $params = [];
@@ -35,6 +36,7 @@ class Controller extends baseController{
             $sql .= ' where c.id = :category_id';
             $params = [':category_id' => $requestparams['category']];
         }
+        
         //where c.id =:category_id
 
          $products = $p->customselect($sql, $params);
