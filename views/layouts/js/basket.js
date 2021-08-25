@@ -106,6 +106,7 @@ class Basket {
             input.id = table.rows[i].cells[0].innerHTML;
             input.value = table.rows[i].cells[2].innerHTML;
            
+            table.rows[i].cells[2].innerHTML = "";
             table.rows[i].cells[2].appendChild(input);
 
             var updatebtn = document.createElement("input");
