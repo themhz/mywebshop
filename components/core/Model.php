@@ -43,7 +43,7 @@ class Model
         }
     }
 
-    public function select(array $params = []): array
+    public function select(array $params = [], array $order=[]): array
     {
         $first = true;
         $db = Database::getInstance();
@@ -65,7 +65,23 @@ class Model
             }
         }
 
+        $first = true;
+        
+        foreach ($order  as $key => $value) {
+            if ($first == true) {
+                $first = false;
+                $sql .= " order by $key ";
+                $sql .= " $value ";
+            } else {
 
+                $sql .= " ,$key ";
+                $sql .= " $value ";
+            }                            
+            
+        }
+
+
+       
         $sth = $db->dbh->prepare($sql);
         $sth->execute();
         $results = $sth->fetchAll(\PDO::FETCH_OBJ);
@@ -162,7 +178,7 @@ class Model
     }
 
     //Makes the selection using all the foreign keys and brings a dataset containing everything about the specific entity
-    public function selectWithRefs(array $params = [])
+    public function selectWithRefs(array $params = [], array $order=[])
     {
         $db = Database::getInstance();        
         $sql = "select a.COLUMN_NAME, a.REFERENCED_TABLE_NAME, a.REFERENCED_COLUMN_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE a
@@ -239,6 +255,20 @@ class Model
             } else {
                 $sql .= "'" . $value . "'";
             }
+        }
+
+        $first = true;
+        foreach ($order  as $key => $value) {
+            if ($first == true) {
+                $first = false;
+                $sql .= " order by $key ";
+                $sql .= " $value ";
+            } else {
+
+                $sql .= " ,$key ";
+                $sql .= " $value ";
+            }                            
+            
         }
 
         

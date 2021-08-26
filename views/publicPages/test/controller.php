@@ -8,6 +8,7 @@ use mywebshop\components\handlers\FileUploader;
 use mywebshop\models\Categories;
 
 use mywebshop\models\Orders;
+use mywebshop\models\Products;
 
 class Controller extends baseController
 {
@@ -25,9 +26,10 @@ class Controller extends baseController
     public function get()
     {
 
-        $products = new Orders();
+        $products = new Products();
         echo "<pre>";
-        print_r($products->selectWithRefs(['locatons.id = '=> 1]));
+        //print_r($products->selectWithRefs(['locatons.id = '=> 1]));
+        print_r($products->select([], ['id'=>'desc', 'price'=>'desc']));
         echo "</pre>";
     }
 
