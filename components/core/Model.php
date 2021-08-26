@@ -16,7 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace mywebshop\components\core;
+
 use mywebshop\components\handlers\Database;
 
 class Model
@@ -34,9 +36,9 @@ class Model
 
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
-                if(isset($value)){
+                if (isset($value)) {
                     $this->{$key} = $value;
-                }                
+                }
             }
         }
     }
@@ -46,7 +48,7 @@ class Model
         $first = true;
         $db = Database::getInstance();
         $sql = "select * from $this->__tablename ";
-                
+
         foreach ($params  as $key => $value) {
             if ($first == true) {
                 $first = false;
@@ -62,8 +64,8 @@ class Model
                 $sql .= "'" . $value . "'";
             }
         }
-             
-       
+
+
         $sth = $db->dbh->prepare($sql);
         $sth->execute();
         $results = $sth->fetchAll(\PDO::FETCH_OBJ);
@@ -73,14 +75,14 @@ class Model
 
     public function customselect($sql, $params = []): array
     {
-    
-        
+
+
         $db = Database::getInstance();
-       
+
         $sth = $db->dbh->prepare($sql);
-        
+
         $sth->execute($params);
-        
+
         $results = $sth->fetchAll(\PDO::FETCH_OBJ);
 
         return $results;
@@ -150,12 +152,100 @@ class Model
         $sql .= ', regdate)';
         $sqlValues .= ' , :regdate)';
         $sql = $sql . $sqlValues;
-        
+
         $sth = $db->dbh->prepare($sql);
         $params['regdate'] = date("Y-m-d H:i:s");
 
         $sth->execute($params);
 
         return $db->dbh->lastInsertId();
+    }
+
+    //Makes the selection using all the foreign keys and brings a dataset containing everything about the specific entity
+    public function selectWithRefs(array $params = [])
+    {
+        $db = Database::getInstance();        
+        $sql = "select a.COLUMN_NAME, a.REFERENCED_TABLE_NAME, a.REFERENCED_COLUMN_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE a
+            where a.CONSTRAINT_SCHEMA = '" . CONFIG['db.name'] . "'
+            AND a.TABLE_NAME = '$this->__tablename'
+            AND a.REFERENCED_TABLE_NAME is not null";
+
+        $sth = $db->dbh->prepare($sql);
+        $sth->execute();
+        $results = $sth->fetchAll(\PDO::FETCH_OBJ);
+
+
+        $sqljoin = "";
+        $tables = [];
+        for ($i = 0; $i < count($results); $i++) {
+
+            if (!in_array($results[$i]->REFERENCED_TABLE_NAME, $tables)) {
+                $sqljoin .= " inner join " . $results[$i]->REFERENCED_TABLE_NAME . " on $this->__tablename." . $results[$i]->COLUMN_NAME;
+                $sqljoin .= " = " . $results[$i]->REFERENCED_TABLE_NAME . "." . $results[$i]->REFERENCED_COLUMN_NAME;
+                $tables[] = $results[$i]->REFERENCED_TABLE_NAME;
+            } else {
+                $sqljoin .= " inner join " . $results[$i]->REFERENCED_TABLE_NAME . " r$i on $this->__tablename." . $results[$i]->COLUMN_NAME;
+                $sqljoin .= " = r$i." . $results[$i]->REFERENCED_COLUMN_NAME;
+            }
+        }
+
+        $columns = [];
+        $select = "select ";
+        $firstcol = true;
+
+        for ($i = 0; $i < count($tables); $i++) {
+
+            $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" . CONFIG['db.name'] . "' AND TABLE_NAME = '" . $tables[$i] . "'";
+            $sth = $db->dbh->prepare($sql);
+            
+            $sth->execute();
+            $results = $sth->fetchAll(\PDO::FETCH_OBJ);
+            
+            for ($j = 0; $j < count($results); $j++) {
+                if (!in_array($results[$j]->COLUMN_NAME, $columns)) {
+                    $columns[] = $results[$j]->COLUMN_NAME;
+                    if($firstcol == true){
+                        $firstcol = false;
+                        $select.= ' '.$tables[$i].'.'.$results[$j]->COLUMN_NAME. ' ';
+                    }else{                        
+                        $select.= ' ,'.$tables[$i].'.'.$results[$j]->COLUMN_NAME. ' ';
+                    }
+                    
+                } else {
+                    $columns[] = $tables[$i].".".$results[$j]->COLUMN_NAME . ' as ' . $tables[$i] . '_' . $results[$j]->COLUMN_NAME;
+                    $select.= ' ,'.$tables[$i].".".$results[$j]->COLUMN_NAME . ' as ' . $tables[$i] . '_' . $results[$j]->COLUMN_NAME;
+                }
+            }
+        }        
+
+        $sql = " $select ";
+        $sql .= " from $this->__tablename";                
+        $sql = $sql.$sqljoin;
+
+        
+        $first = true;
+
+        foreach ($params  as $key => $value) {
+            if ($first == true) {
+                $first = false;
+                $sql .= " where $key ";
+            } else {
+
+                $sql .= " $key ";
+            }
+
+            if (is_numeric($value)) {
+                $sql .= $value;
+            } else {
+                $sql .= "'" . $value . "'";
+            }
+        }
+
+        
+        $sth = $db->dbh->prepare($sql);
+        $sth->execute();
+        $results = $sth->fetchAll(\PDO::FETCH_OBJ);        
+
+        return $results;
     }
 }
