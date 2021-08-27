@@ -47,7 +47,7 @@ class Authenticate extends User
             }
         } else {
 
-            $this->isAuthenticated = true;
+            $this->setUserDetailsFromCertificate();            
         }
     }
 
@@ -69,9 +69,7 @@ class Authenticate extends User
 
     public function checkUserNameAndPassword(): void
     {
-        $result = $this->select(['email =' => $this->app->request->body()['email']]);
-      
-
+        $result = $this->select(['email =' => $this->app->request->body()['email']]);      
         $this->verifyUserNameAndPassword($result);
     }
 
@@ -79,11 +77,12 @@ class Authenticate extends User
     {
         $passwordManager = new PasswordManager($this->app->request->body()['password']);
         if (isset($result[0]) && $passwordManager->verify($result[0]->password)) {
-            $this->isAuthenticated = true;
+            $this->isAuthenticated = true;            
             $this->setUserDetailsAndCreateCertificate($result);
         } else {
-            $this->isAuthenticated = false;
+            $this->isAuthenticated = false;            
         }
+        
     }
 
     public function setUserDetailsAndCreateCertificate($result){
@@ -96,16 +95,29 @@ class Authenticate extends User
         $session = new Session();
         $session->set('userdetails', $details);
                 
-        $paths = new Paths($details);       
+        $paths = new Paths($details);
         $session->set('paths', $paths->get($details));
+        $session->set('loggedin', $this->isAuthenticated);
         //$this->app->userPaths = $paths->get($details);
         // echo "<pre>";
         // print_r($session);
-        // echo "<pre>";    
+        // echo "<pre>";
         // die();
         $this->app->userPaths = $paths;
-        $this->app->session = $session->getAll();
+        $this->app->session = $session;
+        //$this->app->session = $session;
 
+    }
+
+    public function setUserDetailsFromCertificate(){
+        $session = new Session();
+        //$session->get('paths')
+        $this->app->userPaths = new Paths($session->get('userdetails'));
+        $this->app->session = $session;
+        $this->isAuthenticated = true;
+        $this->app->isloggedin = true;
+        $this->app->certificate = $session->get('certificate');
+        $this->app->user = $session->get('userdetails');
     }
 
     public function createCertificate($key): void

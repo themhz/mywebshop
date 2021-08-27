@@ -23,7 +23,6 @@ use mywebshop\components\handlers\Authenticate;
 use mywebshop\components\handlers\Request;
 use mywebshop\components\handlers\Response;
 use mywebshop\components\handlers\Session;
-use mywebshop\components\handlers\UserPaths;
 use mywebshop\components\core\Router;
 
 /**
@@ -48,13 +47,14 @@ class App
     public $userPaths;
     public $session;
     public $isloggedin;
-    public $cerificate;
+    public $certificate;
 
     public function __construct($rootpath)
     {
         $this->rootpath = $rootpath;
         $this->response = new Response();
         $this->session = new Session();
+        
     }
 
     /**
@@ -73,7 +73,7 @@ class App
         
         // 2. Authenticate the user request get userData and paths and set user session variables
         $this->authenticate();        
-        
+             
         // 3. Route the user to the corresponding controller
         $this->route();
     }

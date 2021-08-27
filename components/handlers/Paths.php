@@ -27,26 +27,32 @@ use mywebshop\components\interfaces\UserDetails;
 class Paths implements UserDetails
 {
 
-    public $paths;
+    public $paths = [];
 
     public function __construct($user)
     {
         $user_paths = new User_paths();
-        $this->paths = $user_paths->select(['user_id =' => $user->id]);
+        $paths =$user_paths->select(['user_id =' => $user->id]);
+        foreach($paths as $path){
+            $this->paths[] = $path->path;
+        }
+        
     }
     
-    public function validate($path, $paths): bool
+    public function validate($path): bool
     {
 
         $p = explode('/', $path);
 
+        
         if ($p[0] == "admin") {
             if (!isset($p[1]) ||  $p[1] == "")
                 $p[1] = 'main';
-
-            return in_array($p[1], (array)$paths);
+        
+            return in_array($p[1], (array)$this->paths);
         } else {
-            return in_array($p[0], (array)$paths);
+                       
+            return in_array($p[0], (array)$this->paths);
         }
     }
 

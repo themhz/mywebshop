@@ -1,8 +1,7 @@
 <div class="text-center">
   <form class="form-signin" action="login" method="POST">
 
-  <br><br><br>
-    <img class="mb-4" src="views\layouts\images\mywebshop.png" alt="" width="100" height="100">
+  <br><br><br>    
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
     <label for="inputEmail" class="sr-only">Email address</label>
     <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>

@@ -1,7 +1,7 @@
 <?php
-namespace SampleWebApp\views\adminPages\users;
-use SampleWebApp\components\Controller as baseController;
-use SampleWebApp\components\View;
+namespace mywebshop\views\adminPages\users;
+use mywebshop\components\core\Controller as baseController;
+use mywebshop\components\View;
 
 class Controller extends baseController{
     

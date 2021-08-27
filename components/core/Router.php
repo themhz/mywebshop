@@ -37,33 +37,41 @@ class Router
 
     public function resolve()
     {
+                
+      
+        //  echo "<pre>";
         
-        try {            
+        // print_r($this->app->session->get('loggedin'));
+        //  echo "<pre>";
+        //  die();
+        //try {            
             if (!$this->checkIfPageIsAdmin()) {    
                               
-                $controller = '\mywebshop\views\publicPages\\' . $this->getController() . '\Controller';
-                
+                $controller = '\mywebshop\views\publicPages\\' . $this->getController() . '\Controller';                
                 $this->loadController($controller);
-            } else if ($this->app->session->get('user')->isloggedin && $this->userCanAccess()) {
+                
+            } else if ($this->app->session->get('loggedin') && $this->userCanAccess()) {
                 $controller = '\mywebshop\views\adminPages\\' . $this->getAdminPath() . '\Controller';   
                       
                 $this->loadController($controller);
                
             } else {
+                
                 $this->app->response->setStatusCode(403);
                 $this->app->error = "You can't access this page";
                 $this->loadErrorController();
             }
-        } catch (\Throwable $e) {           
-            $this->app->response->setStatusCode(404);
-            $this->app->error = $e->getMessage();
-            $this->loadErrorController();
-        }
+        // } catch (\Throwable $e) {           
+        //     $this->app->response->setStatusCode(404);
+        //     $this->app->error = $e->getMessage();
+        //     $this->loadErrorController();
+        // }
     }
 
     public function userCanAccess()
-    {
-        return $this->app->userPaths->validate($this->getAdminPath(), $this->app->userPaths->paths);
+    {       
+        
+        return $this->app->userPaths->validate($this->getAdminPath());
     }
 
     public function loadController($controller): void
@@ -71,12 +79,11 @@ class Router
         $controller = new $controller($this->app);
 
         if(!empty($controller->method && method_exists($controller, $controller->method))){
-                        
+
             $method = $controller->method;
             $controller->$method();
-            
         }else{
-            
+
             $method = $this->method;
             $controller->$method();
         }        
@@ -107,16 +114,11 @@ class Router
     public function getAdminPath()
     {
         $paths = explode('/', $this->path);        
-
         if (isset($paths[2]) &&  $paths[2] != ""){
             return $paths[2];
         }else{
             return  'main';
-        }
-            
-            
-
-        
+        }                                
     }
 
     public function getController()
@@ -132,8 +134,6 @@ class Router
                 $controller = $controller[1];
             }
         }
-
-
 
         return $controller;
     }

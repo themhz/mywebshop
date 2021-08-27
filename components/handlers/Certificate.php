@@ -26,12 +26,16 @@ class Certificate {
     public $certificate="";
     
     public function __construct($key = ""){        
-        if(!$key=="")
+        if(!$key==""){
             $this->create($key);
+        }else{
+            $session = new Session();    
+            $this->certificate = $session->get('certificate');
+        }
     }
 
     public function isAuthorized(){
-        if(empty($this->key)){
+        if(empty($this->certificate)){
             return false;
         }else{
             return true;
