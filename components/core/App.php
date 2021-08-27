@@ -20,6 +20,7 @@
 namespace mywebshop\Components\core;
 
 use mywebshop\components\handlers\Authenticate;
+use mywebshop\components\handlers\Certificate;
 use mywebshop\components\handlers\Request;
 use mywebshop\components\handlers\Response;
 use mywebshop\components\handlers\Session;
@@ -54,6 +55,7 @@ class App
         $this->rootpath = $rootpath;
         $this->response = new Response();
         $this->session = new Session();
+        $this->certificate = new Certificate();
         
     }
 

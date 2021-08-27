@@ -33,7 +33,7 @@ abstract class Controller
     
     public function __construct($app){
         $this->app = $app;
-        $method = new Request();
+        $method = $app->request;
         if(isset($method->body()['method'])){ 
             $this->method = $method->body()['method'];
         }        

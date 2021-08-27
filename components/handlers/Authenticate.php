@@ -53,7 +53,8 @@ class Authenticate extends User
 
     public function hasCertificate(): bool
     {
-        $cert = new Certificate();
+        //$cert = new Certificate();
+        $cert = $this->app->certificate;
         return $cert->isAuthorized();
     }
 
