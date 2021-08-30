@@ -1,8 +1,8 @@
-<?php 
+<?php
 
-define('CONFIG', array(
+const CONFIG = array(
     'db.user' => 'root',
     'db.password' => '',
     'db.host' => 'localhost',
     'db.name' => 'mywebshop',
-));
+);
