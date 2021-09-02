@@ -22,3 +22,9 @@ List the License. ...
 Badges.
 
 https://www.freecodecamp.org/news/how-to-write-a-good-readme-file/
+
+
+upload files
+//        $target_dir = $this->app->rootpath . DIRECTORY_SEPARATOR . 'SampleWebApp' . DIRECTORY_SEPARATOR . 'userfiles' . DIRECTORY_SEPARATOR;
+//        $fileUploader = new FileUploader($target_dir);
+//        $fileUploader->upload();

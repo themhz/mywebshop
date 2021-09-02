@@ -1,5 +1,4 @@
 <?php
-
 namespace mywebshop\models;
 use mywebshop\components\core\Model;
 
@@ -22,7 +21,7 @@ class Orders extends Model
 
     public function __construct()
     {
-        parent::__construct('Orders');
+        parent::__construct('Order');
     }
 
     public function create(){

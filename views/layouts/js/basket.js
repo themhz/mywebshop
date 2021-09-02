@@ -1,12 +1,11 @@
 class Basket {
     tableId = "";
-    basketname = ""
-    
+    basketname = "";
+    products = "";
     constructor(tableId, basketname="basket") {
         this.tableId = tableId;
         this.basketname = basketname;
     }
-
 
     loadBasket() {
         var Parent = document.getElementById(this.tableId).tBodies[0];
@@ -92,6 +91,17 @@ class Basket {
             tr.appendChild(td);
         }
 
+        var checkoutbtn = document.createElement("input");
+        checkoutbtn.id = "checkoutbtn";
+        checkoutbtn.type="button";
+        checkoutbtn.value="checkout";
+
+        checkoutbtn.onclick = function(){
+            self.checkout();
+        };
+        var td = document.createElement('td');
+        td.appendChild(checkoutbtn);
+        tr.appendChild(td);
 
         table.tBodies[0].appendChild(tr);
     }
@@ -112,6 +122,7 @@ class Basket {
             var updatebtn = document.createElement("input");
             updatebtn.type = "button";
             updatebtn.value = "update";
+            updatebtn.id = "updatebtn"+i;
             
             self = this;
             updatebtn.onclick = function(){               
@@ -122,6 +133,7 @@ class Basket {
             var removebtn = document.createElement("input");
             removebtn.type = "button";
             removebtn.value = "remove";
+            removebtn.id = "removebtn"+i;
             removebtn.onclick = function(){
                 self.removeItem(table.rows[i].cells[0].innerHTML);
             }
@@ -160,6 +172,40 @@ class Basket {
         localStorage.removeItem(this.basketname);
         localStorage.setItem(this.basketname, JSON.stringify(basket));
         this.loadBasket();
+    }
+
+    checkout(){
+        let products = JSON.parse(localStorage.getItem(this.basketname));
+
+        let xhttp = new XMLHttpRequest();
+        let self = this;
+        xhttp.onreadystatechange = function() {
+
+            //Μονο αν το readystate είναι 4 και το status 200 παρακάτω παραθέτω τους κωδικούς
+            // readyState	Holds the status of the XMLHttpRequest.
+            // 0: request not initialized
+            // 1: server connection established
+            // 2: request received
+            // 3: processing request
+            // 4: request finished and response is ready
+            // 200: "OK"
+            // 403: "Forbidden"
+            // 404: "Page not found"
+            //https://www.w3schools.com/xml/ajax_xmlhttprequest_response.asp
+
+            if (this.readyState == 4 && this.status == 200) {
+                var response = eval('(' + this.responseText + ')');
+            }
+        };
+
+        xhttp.open("post", "basket", true);
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+        xhttp.send(JSON.stringify(products));
+        // xhttp.send(JSON.stringify({
+        //     id: 1
+        // }));
+        //console.log(products);
     }
 
 

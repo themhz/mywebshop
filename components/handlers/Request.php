@@ -61,8 +61,16 @@ class Request
         }
 
         if ($this->method() === 'post') {
-            foreach ($_POST as $key => $value) {
-                $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+            $contenttype = explode(';', $_SERVER["CONTENT_TYPE"]);
+
+            if(in_array("application/json", $contenttype)){
+                $json = file_get_contents('php://input');
+                $body = json_decode($json);
+
+            }else{
+                foreach ($_POST as $key => $value) {
+                    $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+                }
             }
         }
 

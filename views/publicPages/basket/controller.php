@@ -6,7 +6,9 @@ use mywebshop\components\core\Controller as baseController;
 use mywebshop\components\core\View;
 use mywebshop\components\handlers\FileUploader;
 use mywebshop\models\Categories;
-
+use mywebshop\components\handlers\Request;
+use mywebshop\components\handlers\Order;
+use mywebshop\models\Order_items;
 use SampleWebApp\models\Products;
 
 class Controller extends baseController
@@ -19,9 +21,14 @@ class Controller extends baseController
 
     public function post()
     {
-        $target_dir = $this->app->rootpath . DIRECTORY_SEPARATOR . 'SampleWebApp' . DIRECTORY_SEPARATOR . 'userfiles' . DIRECTORY_SEPARATOR;
-        $fileUploader = new FileUploader($target_dir);
-        $fileUploader->upload();
+        $products = $this->app->request->body();
+        //print_r($products);
+        $order = new Order($this->app->session);
+        //echo $order->getId();
+
+        $order_items = new Order_items(1, 2);
+        echo $order_items->getRegdate();
+
     }
 
     public function get()

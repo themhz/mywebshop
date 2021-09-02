@@ -72,7 +72,11 @@ class Session
         return array_key_exists($key, $_SESSION);
     }
 
-    public function getAll(){
+    public function getAll()  {
         return $_SESSION;
+    }
+
+    public function getId(): string{
+        return session_id();
     }
 }
