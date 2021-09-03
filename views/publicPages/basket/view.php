@@ -7,7 +7,7 @@
 <table class="table table-bordered" id="basket">
   <tbody></tbody>
 </table>
-
+<?php print_r($paymentMethods); ?>
 
 <script>
   document.addEventListener('readystatechange', function(evt) {

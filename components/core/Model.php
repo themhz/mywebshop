@@ -278,4 +278,10 @@ class Model
 
         return $results;
     }
+
+    public function getRegdate(): string
+    {
+            $date = new \DateTime();
+            return $date->format('Y/m/d H:i:s');
+    }
 }

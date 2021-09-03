@@ -9,14 +9,18 @@ use mywebshop\models\Categories;
 use mywebshop\components\handlers\Request;
 use mywebshop\components\handlers\Order;
 use mywebshop\models\Order_items;
+use mywebshop\models\PaymentMethods;
 use SampleWebApp\models\Products;
+
 
 class Controller extends baseController
 {
+    private $view;
 
     public function __construct($app)
     {
         parent::__construct($app);
+        $this->view = new view($this->app->request);
     }
 
     public function post()
@@ -34,9 +38,11 @@ class Controller extends baseController
     public function get()
     {
 
-        $view = new view($this->app->request);
+        $paymentMethods = new PaymentMethods();
 
-        echo $view->render('main', 'basket', [], 'public');
+
+
+        echo $this->view->render('main', 'basket', ["paymentMethods"=>$paymentMethods->select()], 'public');
     }
 
     public function put()

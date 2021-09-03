@@ -185,13 +185,13 @@ class User extends Model
         return $this;
     }
 
-    /**
-     * Get the value of regdate
-     */ 
-    public function getRegdate()
-    {
-        return $this->regdate;
-    }
+//    /**
+//     * Get the value of regdate
+//     */
+//    public function getRegdate()
+//    {
+//        return $this->regdate;
+//    }
 
     /**
      * Set the value of regdate
