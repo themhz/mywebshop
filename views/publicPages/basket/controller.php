@@ -10,6 +10,7 @@ use mywebshop\components\handlers\Request;
 use mywebshop\components\handlers\Order;
 use mywebshop\models\Order_items;
 use mywebshop\models\PaymentMethods;
+use mywebshop\models\ShippingMethods;
 use SampleWebApp\models\Products;
 
 
@@ -39,10 +40,11 @@ class Controller extends baseController
     {
 
         $paymentMethods = new PaymentMethods();
+        $shippingMethods = new ShippingMethods();
 
 
 
-        echo $this->view->render('main', 'basket', ["paymentMethods"=>$paymentMethods->select()], 'public');
+        echo $this->view->render('main', 'basket', ["paymentMethods"=>$paymentMethods->select(), "shippingMethods" => $shippingMethods->select()], 'public');
     }
 
     public function put()

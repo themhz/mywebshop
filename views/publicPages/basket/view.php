@@ -7,7 +7,10 @@
 <table class="table table-bordered" id="basket">
   <tbody></tbody>
 </table>
+<hr>------------------------</hr>
 <?php print_r($paymentMethods); ?>
+<hr>------------------------</hr>
+<?php print_r($shippingMethods); ?>
 
 <script>
   document.addEventListener('readystatechange', function(evt) {

@@ -279,7 +279,7 @@ class Model
         return $results;
     }
 
-    public function getRegdate(): string
+    public function getRegdate()
     {
             $date = new \DateTime();
             return $date->format('Y/m/d H:i:s');
