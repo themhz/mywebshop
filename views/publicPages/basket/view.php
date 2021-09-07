@@ -3,13 +3,12 @@
 
 <h2 class="display-6 text-center mb-4">Basket items</h2>
 
-
 <table class="table table-bordered" id="basket">
   <tbody></tbody>
 </table>
-<hr>------------------------</hr>
+<hr>
 <?php print_r($paymentMethods); ?>
-<hr>------------------------</hr>
+<hr>
 <?php print_r($shippingMethods); ?>
 
 <script>
