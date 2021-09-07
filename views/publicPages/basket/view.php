@@ -7,15 +7,23 @@
   <tbody></tbody>
 </table>
 <hr>
-<?php print_r($paymentMethods); ?>
+<?php //print_r($paymentMethods); ?>
+
+
 <hr>
-<?php print_r($shippingMethods); ?>
+<?php //print_r($shippingMethods); ?>
 
 <script>
+  let paymentMethods = JSON.parse('<?php echo json_encode($paymentMethods); ?>');
+  let shippingMethods = JSON.parse('<?php echo json_encode($shippingMethods); ?>');
+
   document.addEventListener('readystatechange', function(evt) {
     if (evt.target.readyState == "complete") {
       let b = new Basket('basket');
       b.loadBasket();
+
+        console.log(paymentMethods);
+        console.log(shippingMethods);
     }
   });
 

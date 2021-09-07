@@ -208,5 +208,9 @@ class Basket {
         //console.log(products);
     }
 
+    loadPaymentMethods(){
+
+    }
+
 
 }
