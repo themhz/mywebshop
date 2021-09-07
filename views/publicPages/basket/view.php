@@ -6,12 +6,6 @@
 <table class="table table-bordered" id="basket">
   <tbody></tbody>
 </table>
-<hr>
-<?php //print_r($paymentMethods); ?>
-
-
-<hr>
-<?php //print_r($shippingMethods); ?>
 
 <script>
   let paymentMethods = JSON.parse('<?php echo json_encode($paymentMethods); ?>');
@@ -21,9 +15,13 @@
     if (evt.target.readyState == "complete") {
       let b = new Basket('basket');
       b.loadBasket();
+      b.paymentMethods = paymentMethods;
+      b.shippingMethods = shippingMethods;
+      b.loadPaymentMethods();
+      b.loadShippingMethods();
+      b.calculateTotalSum();
 
-        console.log(paymentMethods);
-        console.log(shippingMethods);
+
     }
   });
 

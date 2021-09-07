@@ -2,6 +2,9 @@ class Basket {
     tableId = "";
     basketname = "";
     products = "";
+    paymentMethods = null;
+    shippingMethods = null;
+    total = 0;
     constructor(tableId, basketname="basket") {
         this.tableId = tableId;
         this.basketname = basketname;
@@ -18,6 +21,15 @@ class Basket {
         this.addrows(basket, ['id', 'name', 'qty', 'price', 'total', 'action']);
         this.calculateTotals();
         this.addTextAreasAndButtons();
+
+        let table = document.getElementById(this.tableId); //Παίρνουμε τον πίνακα
+        let newRow = table.insertRow();
+        let newRow2 = table.insertRow();
+        for(let i=0;i<6;i++){
+            newRow.insertCell();
+            newRow2.insertCell();
+        }
+
     }
 
     addrows(data, cols) {
@@ -68,6 +80,8 @@ class Basket {
             });
             cel = 0; //Και μηδενίζουμε την κολόνα για την επόμενη γραμμή
         }
+
+
     }
 
     calculateTotals() {
@@ -80,37 +94,15 @@ class Basket {
             total += itemTotal;
             row.cells[4].innerHTML = parseFloat(itemTotal) + '$';
         }
-        var tr = document.createElement('tr');
 
-        for (var c = 0; c < 5; c++) {
-            var td = document.createElement('td');
-            if (c == 4) {
-                td.innerHTML = total + '$';
-            }
-
-            tr.appendChild(td);
-        }
-
-        var checkoutbtn = document.createElement("input");
-        checkoutbtn.id = "checkoutbtn";
-        checkoutbtn.type="button";
-        checkoutbtn.value="checkout";
-
-        checkoutbtn.onclick = function(){
-            self.checkout();
-        };
-        var td = document.createElement('td');
-        td.appendChild(checkoutbtn);
-        tr.appendChild(td);
-
-        table.tBodies[0].appendChild(tr);
+        this.total = total;
     }
 
 
     addTextAreasAndButtons() {
         var table = document.getElementById(this.tableId);
 
-        for (let i = 1; i < table.rows.length - 1; i++) {
+        for (let i = 1; i < table.rows.length ; i++) {
             var input = document.createElement("input");
             input.type = "text";
             input.id = table.rows[i].cells[0].innerHTML;
@@ -151,7 +143,7 @@ class Basket {
                 localStorage.setItem(this.basketname, JSON.stringify(basket));
             }
         }
-        this.loadBasket();
+        this.reloadItems();
     }
 
 
@@ -171,45 +163,113 @@ class Basket {
 
         localStorage.removeItem(this.basketname);
         localStorage.setItem(this.basketname, JSON.stringify(basket));
-        this.loadBasket();
+        this.reloadItems();
     }
 
     checkout(){
-        let products = JSON.parse(localStorage.getItem(this.basketname));
-
-        let xhttp = new XMLHttpRequest();
-        let self = this;
-        xhttp.onreadystatechange = function() {
-
-            //Μονο αν το readystate είναι 4 και το status 200 παρακάτω παραθέτω τους κωδικούς
-            // readyState	Holds the status of the XMLHttpRequest.
-            // 0: request not initialized
-            // 1: server connection established
-            // 2: request received
-            // 3: processing request
-            // 4: request finished and response is ready
-            // 200: "OK"
-            // 403: "Forbidden"
-            // 404: "Page not found"
-            //https://www.w3schools.com/xml/ajax_xmlhttprequest_response.asp
-
-            if (this.readyState == 4 && this.status == 200) {
-                var response = eval('(' + this.responseText + ')');
-            }
-        };
-
-        xhttp.open("post", "basket", true);
-        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
-        xhttp.send(JSON.stringify(products));
-        // xhttp.send(JSON.stringify({
-        //     id: 1
-        // }));
-        //console.log(products);
+        alert("checking out");
+        // let products = JSON.parse(localStorage.getItem(this.basketname));
+        //
+        // let xhttp = new XMLHttpRequest();
+        // let self = this;
+        // xhttp.onreadystatechange = function() {
+        //
+        //     //Μονο αν το readystate είναι 4 και το status 200 παρακάτω παραθέτω τους κωδικούς
+        //     // readyState	Holds the status of the XMLHttpRequest.
+        //     // 0: request not initialized
+        //     // 1: server connection established
+        //     // 2: request received
+        //     // 3: processing request
+        //     // 4: request finished and response is ready
+        //     // 200: "OK"
+        //     // 403: "Forbidden"
+        //     // 404: "Page not found"
+        //     //https://www.w3schools.com/xml/ajax_xmlhttprequest_response.asp
+        //
+        //     if (this.readyState == 4 && this.status == 200) {
+        //         var response = eval('(' + this.responseText + ')');
+        //     }
+        // };
+        //
+        // xhttp.open("post", "basket", true);
+        // xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        //
+        // xhttp.send(JSON.stringify(products));
+        // // xhttp.send(JSON.stringify({
+        // //     id: 1
+        // // }));
+        // //console.log(products);
     }
 
     loadPaymentMethods(){
+        let table = document.getElementById(this.tableId);
+        let select = document.createElement("select");
+        select.id = "paymentMethods";
+        select.classList.add("form-control");
 
+        for(let i=0; i<paymentMethods.length;i++){
+            let option = document.createElement("option");
+            option.innerHTML =paymentMethods[i].name;
+            option.id =paymentMethods[i].id;
+            select.appendChild(option);
+        }
+
+        table.rows[4].cells[2].append(select);
+        table.rows[4].cells[1].append("Επέλεξε τρόπο πληρωμής");
+    }
+
+    loadShippingMethods(){
+        let table = document.getElementById(this.tableId);
+        let select = document.createElement("select");
+        select.id = "shippingMethods";
+        select.classList.add("form-control");
+
+        for(let i=0; i<shippingMethods.length;i++){
+            let option = document.createElement("option");
+            option.innerHTML =shippingMethods[i].name;
+            option.id =shippingMethods[i].id;
+            select.appendChild(option);
+        }
+
+        table.rows[5].cells[2].append(select);
+        table.rows[5].cells[1].append("Επέλεξε τρόπο αποστολής");
+    }
+
+
+    calculateTotalSum(){
+        let table = document.getElementById(this.tableId);
+        var checkoutbtn = document.createElement("input");
+        checkoutbtn.id = "checkoutbtn";
+        checkoutbtn.type="button";
+        checkoutbtn.value="checkout";
+
+        self = this;
+        checkoutbtn.onclick = function(){
+            self.checkout();
+        };
+
+        var td = document.createElement('td');
+        var td2 = document.createElement('td');
+        td.appendChild(checkoutbtn);
+
+        td2.innerHTML = this.total;
+
+        var tr = document.createElement('tr');
+        tr.insertCell();
+        tr.insertCell();
+        tr.insertCell();
+        tr.insertCell();
+        tr.appendChild(td2);
+        tr.appendChild(td);
+        table.tBodies[0].appendChild(tr);
+    }
+
+
+    reloadItems(){
+        this.loadBasket();
+        this.loadPaymentMethods();
+        this.loadShippingMethods();
+        this.calculateTotalSum();
     }
 
 
