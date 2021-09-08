@@ -43,7 +43,7 @@ class Model
         }
     }
 
-    public function select(array $params = [], array $order=[]): array
+    public function select(array $params = [], array $order=[], $debug = false): array
     {
         $first = true;
         $db = Database::getInstance();
@@ -81,7 +81,10 @@ class Model
         }
 
 
-       
+        if($debug == true){
+            echo $sql;
+            die();
+        }
         $sth = $db->dbh->prepare($sql);
         $sth->execute();
         $results = $sth->fetchAll(\PDO::FETCH_OBJ);

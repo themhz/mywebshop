@@ -1,13 +1,12 @@
 <?php
 
-namespace mywebshop\views\publicPages\basket;
+namespace mywebshop\views\publicPages\order;
 
 use mywebshop\components\core\Controller as baseController;
 use mywebshop\components\core\View;
 use mywebshop\components\handlers\FileUploader;
-use mywebshop\components\handlers\Session;
 use mywebshop\models\Categories;
-use mywebshop\components\handlers\WebServiceCaller;
+use mywebshop\components\handlers\Request;
 use mywebshop\components\handlers\Order;
 use mywebshop\models\Order_items;
 use mywebshop\models\PaymentMethods;
@@ -27,40 +26,24 @@ class Controller extends baseController
 
     public function post()
     {
-
-        $session = new Session();
-        //Calculate total budget
         $products = $this->app->request->body();
-
-        //print_r($session->getAll());
-//        foreach($products as $product){
-//            echo $product->id."\n";
-//            echo $product->name."\n";
-//            echo $product->qty."\n";
-//            echo $product->price."\n";
-//        }
-
-        $order = new Order($this->app->session);
-        $order->addProducts($products);
+        //print_r($products);
+        //$order = new Order($this->app->session);
+        //$order->addProducts($products);
         //echo $order->getId();
-//
-//        $order_items = new Order_items(1, 2);
-//        echo $order_items->getRegdate();
 
-        //$wsc = new WebServiceCaller();
-        //echo $wsc->send($products, $products);
+        //$order_items = new Order_items(1, 2);
+        //echo $order_items->getRegdate();
 
     }
 
     public function get()
     {
 
-        $paymentMethods = new PaymentMethods();
-        $shippingMethods = new ShippingMethods();
-
-
-
-        echo $this->view->render('main', 'basket', ["paymentMethods"=>$paymentMethods->select(), "shippingMethods" => $shippingMethods->select()], 'public');
+//        $paymentMethods = new PaymentMethods();
+//        $shippingMethods = new ShippingMethods();
+//
+//        echo $this->view->render('main', 'basket', ["paymentMethods"=>$paymentMethods->select(), "shippingMethods" => $shippingMethods->select()], 'public');
     }
 
     public function put()

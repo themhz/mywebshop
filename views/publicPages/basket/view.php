@@ -20,9 +20,6 @@
       b.loadPaymentMethods();
       b.loadShippingMethods();
       b.calculateTotalSum();
-
-
     }
   });
-
 </script>

@@ -5,6 +5,7 @@ class Basket {
     paymentMethods = null;
     shippingMethods = null;
     total = 0;
+    currency = "&euro;";
     constructor(tableId, basketname="basket") {
         this.tableId = tableId;
         this.basketname = basketname;
@@ -92,7 +93,7 @@ class Basket {
           
             let itemTotal = parseFloat(row.cells[2].innerHTML) * parseFloat(row.cells[3].innerHTML);
             total += itemTotal;
-            row.cells[4].innerHTML = parseFloat(itemTotal) + '$';
+            row.cells[4].innerHTML = this.currency + parseFloat(itemTotal) ;
         }
 
         this.total = total;
@@ -167,39 +168,26 @@ class Basket {
     }
 
     checkout(){
-        alert("checking out");
-        // let products = JSON.parse(localStorage.getItem(this.basketname));
+
+        let products = localStorage.getItem(this.basketname) ? JSON.parse(localStorage.getItem(this.basketname)) : [];
+        //console.log(products);
+
+        //alert("checking out");
+        //let products = JSON.parse(localStorage.getItem(this.basketname));
         //
-        // let xhttp = new XMLHttpRequest();
-        // let self = this;
-        // xhttp.onreadystatechange = function() {
-        //
-        //     //Μονο αν το readystate είναι 4 και το status 200 παρακάτω παραθέτω τους κωδικούς
-        //     // readyState	Holds the status of the XMLHttpRequest.
-        //     // 0: request not initialized
-        //     // 1: server connection established
-        //     // 2: request received
-        //     // 3: processing request
-        //     // 4: request finished and response is ready
-        //     // 200: "OK"
-        //     // 403: "Forbidden"
-        //     // 404: "Page not found"
-        //     //https://www.w3schools.com/xml/ajax_xmlhttprequest_response.asp
-        //
-        //     if (this.readyState == 4 && this.status == 200) {
-        //         var response = eval('(' + this.responseText + ')');
-        //     }
-        // };
-        //
-        // xhttp.open("post", "basket", true);
-        // xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        //
-        // xhttp.send(JSON.stringify(products));
-        // // xhttp.send(JSON.stringify({
-        // //     id: 1
-        // // }));
-        // //console.log(products);
+        let xhttp = new XMLHttpRequest();
+        let self = this;
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var response = eval('(' + this.responseText + ')');
+            }
+        };
+        xhttp.open("post", "basket", true);
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp.send(JSON.stringify(products));
+
     }
+
 
     loadPaymentMethods(){
         let table = document.getElementById(this.tableId);
@@ -214,8 +202,9 @@ class Basket {
             select.appendChild(option);
         }
 
-        table.rows[4].cells[2].append(select);
-        table.rows[4].cells[1].append("Επέλεξε τρόπο πληρωμής");
+        //alert(table.rows.length);
+        table.rows[table.rows.length-2].cells[2].append(select);
+        table.rows[table.rows.length-2].cells[1].append("Επέλεξε τρόπο πληρωμής");
     }
 
     loadShippingMethods(){
@@ -231,8 +220,8 @@ class Basket {
             select.appendChild(option);
         }
 
-        table.rows[5].cells[2].append(select);
-        table.rows[5].cells[1].append("Επέλεξε τρόπο αποστολής");
+        table.rows[table.rows.length-1].cells[2].append(select);
+        table.rows[table.rows.length-1].cells[1].append("Επέλεξε τρόπο αποστολής");
     }
 
 
@@ -252,7 +241,7 @@ class Basket {
         var td2 = document.createElement('td');
         td.appendChild(checkoutbtn);
 
-        td2.innerHTML = this.total;
+        td2.innerHTML = this.currency + this.total;
 
         var tr = document.createElement('tr');
         tr.insertCell();

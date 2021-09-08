@@ -5,4 +5,5 @@ const CONFIG = array(
     'db.password' => '',
     'db.host' => 'localhost',
     'db.name' => 'mywebshop',
+    'paymentUrl' => 'http://localhost/paymentgateway/payment.php'
 );
