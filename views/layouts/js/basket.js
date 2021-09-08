@@ -6,9 +6,13 @@ class Basket {
     shippingMethods = null;
     total = 0;
     currency = "&euro;";
+    taxidromika= 1;
+    antikatavoli= 2;
+
     constructor(tableId, basketname="basket") {
         this.tableId = tableId;
         this.basketname = basketname;
+
     }
 
     loadBasket() {
@@ -207,21 +211,35 @@ class Basket {
         table.rows[table.rows.length-2].cells[1].append("Επέλεξε τρόπο πληρωμής");
     }
 
+    showShippingForm(){
+        if(document.getElementById("shippingMethods").value == this.taxidromika){
+            document.getElementById("shipping_details").style.display="";
+        }else{
+            document.getElementById("shipping_details").style.display="none";
+        }
+    }
+
     loadShippingMethods(){
         let table = document.getElementById(this.tableId);
         let select = document.createElement("select");
         select.id = "shippingMethods";
         select.classList.add("form-control");
+        let self =  this;
+        select.onchange = function(){
+            self.showShippingForm();
+        }
 
         for(let i=0; i<shippingMethods.length;i++){
             let option = document.createElement("option");
             option.innerHTML =shippingMethods[i].name;
-            option.id =shippingMethods[i].id;
+            option.value =shippingMethods[i].id;
             select.appendChild(option);
         }
 
         table.rows[table.rows.length-1].cells[2].append(select);
         table.rows[table.rows.length-1].cells[1].append("Επέλεξε τρόπο αποστολής");
+        select.selectedIndex = 1;
+        this.showShippingForm();
     }
 
 

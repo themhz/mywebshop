@@ -12,6 +12,8 @@ use mywebshop\components\handlers\Order;
 use mywebshop\models\Order_items;
 use mywebshop\models\PaymentMethods;
 use mywebshop\models\ShippingMethods;
+use mywebshop\models\Locations;
+
 use SampleWebApp\models\Products;
 
 
@@ -57,10 +59,11 @@ class Controller extends baseController
 
         $paymentMethods = new PaymentMethods();
         $shippingMethods = new ShippingMethods();
+        $locations = new Locations();
+        $locations =  $locations->select([],["nomos"=>"asc", "dimos"=> "asc"]);
 
 
-
-        echo $this->view->render('main', 'basket', ["paymentMethods"=>$paymentMethods->select(), "shippingMethods" => $shippingMethods->select()], 'public');
+        echo $this->view->render('main', 'basket', ["paymentMethods"=>$paymentMethods->select(), "shippingMethods" => $shippingMethods->select(), "locations" =>$locations], 'public');
     }
 
     public function put()
@@ -76,11 +79,6 @@ class Controller extends baseController
     public function getmenu()
     {
 
-        // $menu = "<script>const data = JSON.parse('".$menu ."');         
-        // let tree = buildList(data);
-        // buildUlLi(tree);
-        // document.getElementById('menu').innerHTML = list+'<ul>';
-        // </script>";
 
         $categories = new Categories();
         $data = $categories->select();        

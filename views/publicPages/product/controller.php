@@ -32,7 +32,7 @@ class Controller extends baseController{
         
         
          $view = new view($this->app->request);
-         echo $view->render('inner', $this->app->request->path() , $products);
+         echo $view->render('main', $this->app->request->path() , $products);
     }
 
     public function put(){

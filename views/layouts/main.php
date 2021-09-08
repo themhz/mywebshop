@@ -37,17 +37,96 @@
         font-size: 3.5rem;
       }
     }
+
+    .sidenav {
+        height: 100%;
+        width: 300px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: lightblue;
+        /* overflow-x: hidden; */
+        padding-top: 20px;
+    }
+
+
+    .sidenav a {
+        text-decoration: none;
+        font-size: 25px;
+        color: white;
+    }
+
+    .sidenav a:hover {
+        color: #f1f1f1;
+    }
   </style>
 
 
   <!-- Custom styles for this template -->
   <!-- <link href="pricing.css" rel="stylesheet"> -->
+    <script>
+        document.addEventListener('readystatechange', function(evt) {
+            if (evt.target.readyState == "complete") {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        //var response = eval('(' + this.responseText + ')');
+                        let response = JSON.parse(this.responseText);
+                        let tree = buildList(response);
+                        buildUlLi(tree);
+                        document.getElementById('menu').innerHTML = list + '<ul>';
+                    }
+                };
+                xhttp.open("GET", "http://localhost:8080/?method=getmenu", true);
+                xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                xhttp.send();
+                // xhttp.send(JSON.stringify({
+                //     "email": document.getElementById("email").value,
+                //     "password": document.getElementById("password").value
+                // }));
 
+            }
+        });
+
+        function buildList(data) {
+
+            let counter = 0;
+            var table = data;
+            var root = {
+                id: 0,
+                parent_id: null,
+                name: "",
+                children: []
+            };
+            var node_list = {
+                0: root
+            };
+
+            for (var i = 0; i < table.length; i++) {
+                node_list[table[i].id] = table[i];
+                node_list[table[i].parent_id].children.push(node_list[table[i].id]);
+            }
+
+            return root;
+        }
+
+
+        let list = '<ul>';
+
+        function buildUlLi(tree) {
+            tree.children.forEach(function callbackFn(element, index, array) {
+                list += "<li>";
+                list += '<a href="products?category='+element.id+'">'+element.name + '</a><ul>';
+                buildUlLi(element);
+                list += '</ul></li>';
+            });
+        }
+    </script>
 
 </head>
 
 <body>
-
 
   <div class="container py-3">
     <header>
@@ -68,7 +147,11 @@
           <a class="me-3 py-2 text-dark text-decoration-none" href="login">Login</a>
         </nav>
     </header>
+
     <main>
+        <div class="sidenav" id="menu">
+
+        </div>
       {{VIEW}}
     </main>    
   </div>
