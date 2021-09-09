@@ -20,7 +20,7 @@
 <div class="bd-example">
     <form>
         <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" placeholder="Email">
             </div>
@@ -46,20 +46,29 @@
   let paymentMethods = JSON.parse('<?php echo json_encode($paymentMethods); ?>');
   let shippingMethods = JSON.parse('<?php echo json_encode($shippingMethods); ?>');
   let locations = JSON.parse('<?php echo json_encode($locations); ?>');
-
-  //console.log(locations);
-
+  let vatcodes = JSON.parse('<?php echo json_encode($vatcodes); ?>');
+  let basket = null;
   document.addEventListener('readystatechange', function(evt) {
-    if (evt.target.readyState == "complete") {
-      let b = new Basket('basket');
-      b.loadBasket();
-      b.paymentMethods = paymentMethods;
-      b.shippingMethods = shippingMethods;
-      b.loadPaymentMethods();
-      b.loadShippingMethods();
-      b.calculateTotalSum();
 
-      populateDropDown("location", locations);
+
+
+    if (evt.target.readyState == "complete") {
+
+        basket = new Basket('basket');
+        populateDropDown("location", locations);
+        basket.loadBasket();
+        basket.paymentMethods = paymentMethods;
+        basket.shippingMethods = shippingMethods;
+        basket.locations = locations;
+        basket.vatcodes = vatcodes;
+        basket.loadPaymentMethods();
+        basket.loadShippingMethods();
+        basket.calculateTotalSum();
+
+
+
+
+      document.getElementById("email").value = localStorage.getItem("email");
 
     }
   });
@@ -67,17 +76,22 @@
   function populateDropDown(id, obj){
       let select = document.getElementById(id);
       select.onchange = function (){
-
+          basket.reloadItems();
       }
 
       for(let i=0; i<obj.length;i++){
           let option = document.createElement("option");
           option.innerHTML = obj[i].dimos + " - " + obj[i].nomos;
-          option.id =obj[i].id;
+          //option.id =obj[i].id;
+          option.setAttribute("data-vatid", obj[i].vatid);
           option.value =obj[i].id;
           select.appendChild(option);
       }
+
+
   }
+
+
 
 
 </script>

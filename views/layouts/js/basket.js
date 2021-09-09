@@ -8,11 +8,13 @@ class Basket {
     currency = "&euro;";
     taxidromika= 1;
     antikatavoli= 2;
+    shippingmethod = 1;
+    locations = null;
+    vatcodes = null;
 
     constructor(tableId, basketname="basket") {
         this.tableId = tableId;
         this.basketname = basketname;
-
     }
 
     loadBasket() {
@@ -49,7 +51,6 @@ class Basket {
             tr.appendChild(th); //και το κάνουμε append στο tr την γραμμή
         }
 
-        //document.getElementById("tbody").appendChild(tr);
         tabLines.tBodies[0].appendChild(tr);
 
         for (var j = 0; j < data.length; j++) { //Για κάθε εγγραφή μέσα στα δεδομένα που φέραμε σε μορφή json
@@ -134,7 +135,7 @@ class Basket {
             removebtn.onclick = function(){
                 self.removeItem(table.rows[i].cells[0].innerHTML);
             }
-            table.rows[i].cells[5].appendChild(removebtn);        
+            table.rows[i].cells[5].appendChild(removebtn);
         }
     }
 
@@ -174,11 +175,6 @@ class Basket {
     checkout(){
 
         let products = localStorage.getItem(this.basketname) ? JSON.parse(localStorage.getItem(this.basketname)) : [];
-        //console.log(products);
-
-        //alert("checking out");
-        //let products = JSON.parse(localStorage.getItem(this.basketname));
-        //
         let xhttp = new XMLHttpRequest();
         let self = this;
         xhttp.onreadystatechange = function() {
@@ -206,17 +202,21 @@ class Basket {
             select.appendChild(option);
         }
 
-        //alert(table.rows.length);
         table.rows[table.rows.length-2].cells[2].append(select);
         table.rows[table.rows.length-2].cells[1].append("Επέλεξε τρόπο πληρωμής");
     }
 
     showShippingForm(){
+
+        this.shippingmethod =document.getElementById("shippingMethods").value;
+        localStorage.setItem("shippingmethod", this.shippingmethod);
+
         if(document.getElementById("shippingMethods").value == this.taxidromika){
             document.getElementById("shipping_details").style.display="";
         }else{
             document.getElementById("shipping_details").style.display="none";
         }
+
     }
 
     loadShippingMethods(){
@@ -238,7 +238,9 @@ class Basket {
 
         table.rows[table.rows.length-1].cells[2].append(select);
         table.rows[table.rows.length-1].cells[1].append("Επέλεξε τρόπο αποστολής");
-        select.selectedIndex = 1;
+        // console.log(this.shippingmethod);
+        // select.value = this.shippingmethod;
+        select.value = localStorage.getItem("shippingmethod");
         this.showShippingForm();
     }
 
@@ -260,6 +262,7 @@ class Basket {
         td.appendChild(checkoutbtn);
 
         td2.innerHTML = this.currency + this.total;
+        td2.id = "total";
 
         var tr = document.createElement('tr');
         tr.insertCell();
@@ -269,6 +272,8 @@ class Basket {
         tr.appendChild(td2);
         tr.appendChild(td);
         table.tBodies[0].appendChild(tr);
+
+        //this.calculateTotalVatId();
     }
 
 
@@ -276,8 +281,25 @@ class Basket {
         this.loadBasket();
         this.loadPaymentMethods();
         this.loadShippingMethods();
+        this.calculateTotalVatId();
         this.calculateTotalSum();
     }
 
 
+    calculateTotalVatId(){
+        let vatcodes = document.getElementById("location");
+        let selected = vatcodes.options[vatcodes.selectedIndex];
+        let vatid = selected.getAttribute("data-vatid");
+        let rate = 0;
+        for(let i=0; i<this.vatcodes.length;i++){
+          //console.log(this.vatcodes[i].id);
+            if(this.vatcodes[i].id == vatid){
+                //console.log(this.vatcodes[i].rate);
+                rate = this.vatcodes[i].rate;
+            }
+        }
+
+        this.total = ((this.total * rate)/100) + this.total;
+
+    }
 }

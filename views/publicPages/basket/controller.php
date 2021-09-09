@@ -13,6 +13,7 @@ use mywebshop\models\Order_items;
 use mywebshop\models\PaymentMethods;
 use mywebshop\models\ShippingMethods;
 use mywebshop\models\Locations;
+use mywebshop\models\Vatcodes;
 
 use SampleWebApp\models\Products;
 
@@ -62,8 +63,11 @@ class Controller extends baseController
         $locations = new Locations();
         $locations =  $locations->select([],["nomos"=>"asc", "dimos"=> "asc"]);
 
+        $vatcodes =  new vatcodes();
+        $vatcodes =  $vatcodes->select();
 
-        echo $this->view->render('main', 'basket', ["paymentMethods"=>$paymentMethods->select(), "shippingMethods" => $shippingMethods->select(), "locations" =>$locations], 'public');
+
+        echo $this->view->render('main', 'basket', ["paymentMethods"=>$paymentMethods->select(), "shippingMethods" => $shippingMethods->select(), "locations" =>$locations, "vatcodes"=>$vatcodes], 'public');
     }
 
     public function put()

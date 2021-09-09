@@ -45,7 +45,7 @@
         z-index: 1;
         top: 0;
         left: 0;
-        background-color: lightblue;
+        background-color: #658C1E;
         /* overflow-x: hidden; */
         padding-top: 20px;
     }
@@ -140,9 +140,7 @@
         </a>
 
         <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-          <a class="me-3 py-2 text-dark text-decoration-none" href="products">products</a>
-          <a class="me-3 py-2 text-dark text-decoration-none" href="#">Enterprise</a>
-          <a class="me-3 py-2 text-dark text-decoration-none" href="#">Pricing</a>
+          <a class="me-3 py-2 text-dark text-decoration-none" href="products">Products</a>
           <a class="me-3 py-2 text-dark text-decoration-none" href="basket">Basket</a>
           <a class="me-3 py-2 text-dark text-decoration-none" href="login">Login</a>
         </nav>
@@ -153,6 +151,8 @@
 
         </div>
       {{VIEW}}
+        <hr>
+
     </main>    
   </div>
 
