@@ -56,14 +56,15 @@
 
         basket = new Basket('basket');
         populateDropDown("location", locations);
-        basket.loadBasket();
+
         basket.paymentMethods = paymentMethods;
         basket.shippingMethods = shippingMethods;
         basket.locations = locations;
         basket.vatcodes = vatcodes;
-        basket.loadPaymentMethods();
-        basket.loadShippingMethods();
-        basket.calculateTotalSum();
+        basket.reloadItems();
+        // basket.loadPaymentMethods();
+        // basket.loadShippingMethods();
+        // basket.calculateTotalSum();
 
 
 

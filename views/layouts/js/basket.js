@@ -11,6 +11,7 @@ class Basket {
     shippingmethod = 1;
     locations = null;
     vatcodes = null;
+    rate = 0;
 
     constructor(tableId, basketname="basket") {
         this.tableId = tableId;
@@ -66,24 +67,6 @@ class Basket {
                     }
                 }
             }
-
-
-
-            tabLinesRow.addEventListener("click", function (event) { //Για κάθε γραμμή στον πίνακα βάζω ένα event onclick ώστε όταν γίνεται click να ανοίγει ένα popup παράθυρο 
-                // var modal = document.getElementById(self.popupwindow); // Παίρνω το όνομα του popup
-                // modal.style.display = "block"; //Του αλλάζω στιλ για να το εμφανίσω
-
-                // if(self.getItemUrl!=null){
-                //     self.getItem(this.cells[0].innerHTML); //Παίρνω τον κωδικό της γραμμής ή του στοιχείου που βρίσκεται στην πρώτη στήλη.:ΠΡΟΣΟΧΗ αν δεν είναισ την πρώτη θέση δεν θα παίξει
-                //     actionType = "update"; //Δηλώνω το acton type. Επειδή χρησιμοποιώ την ίδια φόρμα για το update και το insert για να ξέρω πότε θα γίνει το ένα και πότε το άλλο.
-                // }
-
-                // self.selectedrows = this.cells;
-                // if(self.onOpenPopup!=null){
-                //     self.onOpenPopup(self.selectedrows[0].innerHTML, self);
-                // }  
-                        //alert("clicked");
-            });
             cel = 0; //Και μηδενίζουμε την κολόνα για την επόμενη γραμμή
         }
 
@@ -259,21 +242,24 @@ class Basket {
 
         var td = document.createElement('td');
         var td2 = document.createElement('td');
+        var td3 = document.createElement('td');
         td.appendChild(checkoutbtn);
 
         td2.innerHTML = this.currency + this.total;
         td2.id = "total";
 
+        td3.id = "vatrate";
+
         var tr = document.createElement('tr');
         tr.insertCell();
         tr.insertCell();
         tr.insertCell();
-        tr.insertCell();
+        tr.appendChild(td3);
         tr.appendChild(td2);
         tr.appendChild(td);
         table.tBodies[0].appendChild(tr);
 
-        //this.calculateTotalVatId();
+        document.getElementById("vatrate").innerHTML = this.rate + "% ΦΠΑ";
     }
 
 
@@ -290,16 +276,17 @@ class Basket {
         let vatcodes = document.getElementById("location");
         let selected = vatcodes.options[vatcodes.selectedIndex];
         let vatid = selected.getAttribute("data-vatid");
-        let rate = 0;
+        //let rate = 0;
         for(let i=0; i<this.vatcodes.length;i++){
           //console.log(this.vatcodes[i].id);
             if(this.vatcodes[i].id == vatid){
                 //console.log(this.vatcodes[i].rate);
-                rate = this.vatcodes[i].rate;
+                this.rate = this.vatcodes[i].rate;
+
             }
         }
 
-        this.total = ((this.total * rate)/100) + this.total;
+        this.total = ((this.total * this.rate)/100) + this.total;
 
     }
 }
