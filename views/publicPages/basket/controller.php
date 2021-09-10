@@ -14,6 +14,7 @@ use mywebshop\models\PaymentMethods;
 use mywebshop\models\ShippingMethods;
 use mywebshop\models\Locations;
 use mywebshop\models\Vatcodes;
+use mywebshop\models\ShippingMethodRatings;
 
 use SampleWebApp\models\Products;
 
@@ -60,6 +61,9 @@ class Controller extends baseController
 
         $paymentMethods = new PaymentMethods();
         $shippingMethods = new ShippingMethods();
+        $shippingMethodsRatings = new ShippingMethodRatings();
+        $shippingMethodsRatings = $shippingMethodsRatings->select();
+
         $locations = new Locations();
         $locations =  $locations->select([],["nomos"=>"asc", "dimos"=> "asc"]);
 
@@ -67,7 +71,7 @@ class Controller extends baseController
         $vatcodes =  $vatcodes->select();
 
 
-        echo $this->view->render('main', 'basket', ["paymentMethods"=>$paymentMethods->select(), "shippingMethods" => $shippingMethods->select(), "locations" =>$locations, "vatcodes"=>$vatcodes], 'public');
+        echo $this->view->render('main', 'basket', ["paymentMethods"=>$paymentMethods->select(), "shippingMethods" => $shippingMethods->select(), "locations" =>$locations, "vatcodes"=>$vatcodes, "shippingMethodsRatings" => $shippingMethodsRatings], 'public');
     }
 
     public function put()
