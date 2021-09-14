@@ -62,7 +62,6 @@ class Controller extends baseController
         $paymentMethods = new PaymentMethods();
         $shippingMethods = new ShippingMethods();
         $shippingMethodsRatings = new ShippingMethodRatings();
-        $shippingMethodsRatings = $shippingMethodsRatings->select();
 
         $locations = new Locations();
         $locations =  $locations->select([],["nomos"=>"asc", "dimos"=> "asc"]);
@@ -71,7 +70,7 @@ class Controller extends baseController
         $vatcodes =  $vatcodes->select();
 
 
-        echo $this->view->render('main', 'basket', ["paymentMethods"=>$paymentMethods->select(), "shippingMethods" => $shippingMethods->select(), "locations" =>$locations, "vatcodes"=>$vatcodes, "shippingMethodsRatings" => $shippingMethodsRatings], 'public');
+        echo $this->view->render('main', 'basket', ["paymentMethods"=>$paymentMethods->select(), "shippingMethods" => $shippingMethods->select(), "locations" =>$locations, "vatcodes"=>$vatcodes, "shippingMethodsRatings" => $shippingMethodsRatings->select()], 'public');
     }
 
     public function put()
