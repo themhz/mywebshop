@@ -52,8 +52,6 @@
   let basket = null;
   document.addEventListener('readystatechange', function(evt) {
 
-
-
     if (evt.target.readyState == "complete") {
 
         console.log(shippingMethodsRatings);
