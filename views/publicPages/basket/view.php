@@ -69,7 +69,6 @@
 
 
 
-
       document.getElementById("email").value = localStorage.getItem("email");
 
     }
