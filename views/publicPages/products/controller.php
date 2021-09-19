@@ -28,14 +28,17 @@ class Controller extends baseController{
 
         $params = [];
          $p = new Products();
-         $sql = "SELECT a.id, a.name, a.description, a.price, a.image, c.name categoryName, c.id categoryId FROM products a 
+         $sql = "SELECT a.id, a.name, a.description, min(a.price) price, d.image, c.name categoryName, c.id categoryId FROM products a 
          inner join product_categories  b on  a.id = b.product_id
-         inner join categories  c on c.id = b.category_id ";
+         inner join categories  c on c.id = b.category_id
+         inner join product_images d on d.product_id = a.id
+        ";
 
         if(isset($requestparams['category'])){
-            $sql .= ' where c.id = :category_id';
+            $sql .= ' where c.id = :category_id ';
             $params = [':category_id' => $requestparams['category']];
         }
+        $sql .= '  group by a.id ';
         
         //where c.id =:category_id
 
