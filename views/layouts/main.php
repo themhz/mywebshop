@@ -91,7 +91,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-3">
                         <div class="logo">
-                            <a href="index.html">
+                            <a href="/">
                                 <img src="views/layouts/img/logo.png" alt="Logo">
                             </a>
                         </div>

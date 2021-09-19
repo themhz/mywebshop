@@ -30,7 +30,8 @@ class Menu{
             id: 0,
             parent_id: null,
             name: "",
-            children: []
+            children: [],
+            lvl: 0
         };
         var node_list = {
             0: root
@@ -49,9 +50,20 @@ class Menu{
     
     buildUlLi(tree) {
         let self = this;
+        let display = "";
         tree.children.forEach(function callbackFn(element, index, array) {
-            self.list += '<li class="nav-item">';
-            self.list += '<a class="nav-link" href="products?category='+element.id+'">'+element.name + '</a><ul>';
+            if(parseInt(element.lvl) > 0)
+                display = "none";
+            else
+                display = "";
+
+            self.list += '<li class="nav-item" style="display:'+display+'">';
+            console.log(element);
+            if(parseInt(element.num_of_products)>0)
+                self.list += '<a class="nav-link" href="products?category='+element.id+'">'+element.name + ' ('+element.num_of_products+')</a><ul>';
+            else
+                self.list += '<div class="nav-link category-item">'+element.name + '</div><ul>';
+
             self.buildUlLi(element);
             self.list += '</ul></li>';
         });

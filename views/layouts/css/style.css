@@ -581,6 +581,11 @@ h2 {
     padding: 0;
 }
 
+.category-item:hover{
+    cursor:pointer;
+    color:#9acd48;
+}
+
 .category .category-item {
     position: relative;
     display: flex;
@@ -624,7 +629,7 @@ h2 {
 }
 
 .category .category-name:hover {
-    opacity: 1;     
+    opacity: 1;
 }
 
 .category .category-name p {
