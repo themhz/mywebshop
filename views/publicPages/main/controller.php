@@ -52,7 +52,19 @@ class Controller extends baseController
         // </script>";
 
         $categories = new Categories();
-        $data = $categories->select();        
+        //$data = $categories->select([],['parent_id'=>'asc', 'id'=>'asc']);        
+        $data = $categories->customselect("WITH RECURSIVE menu (id, parent_id, name, path, lvl) AS
+                                            (
+                                            SELECT id, parent_id, name, name as path, 0 lvl
+                                                FROM categories
+                                                WHERE parent_id =0
+                                            UNION ALL
+                                            SELECT c.id, c.parent_id, c.name, CONCAT(cp.path, ' > ', c.name) ,cp.lvl + 1
+                                                FROM menu AS cp JOIN categories AS c
+                                                ON cp.id = c.parent_id
+                                            )
+                                            SELECT * FROM menu
+                                            order by lvl ,id asc;");
         $menu = [];
 
         foreach ($data as $row) {            

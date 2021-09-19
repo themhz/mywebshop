@@ -515,11 +515,11 @@
 
 <body>
 
-    <div class="sidenav" id="menu">
+    <div class="sidenav" id="menu" style="position:relative;float:left;width: 440px;">
                
     </div>
 
-    <div class="main">
+    <div class="main" style="float:left;">
     {{VIEW}}
     </div>
     <script src="https://getbootstrap.com/docs/5.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>

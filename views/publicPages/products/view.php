@@ -12,7 +12,7 @@
           echo "<td><a href='product?product_id=$rows->id'><img style='width:150px;' src='userfiles/$rows->image'/> </a></td>";
           echo "<td>$rows->id </td>";
           echo "<td>$rows->name </td>";
-          echo "<td>$rows->description </td>";
+         // echo "<td>$rows->description </td>";
           echo "<td>$rows->price </td>";          
         
         echo "</tr>";

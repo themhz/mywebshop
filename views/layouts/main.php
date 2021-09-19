@@ -74,6 +74,7 @@
                         //var response = eval('(' + this.responseText + ')');
                         let response = JSON.parse(this.responseText);
                         let tree = buildList(response);
+                       
                         buildUlLi(tree);
                         document.getElementById('menu').innerHTML = list + '<ul>';
                     }
@@ -104,6 +105,9 @@
             };
 
             for (var i = 0; i < table.length; i++) {
+              // console.log(table[i].id);
+              // console.log(table[i].parent_id);
+
                 node_list[table[i].id] = table[i];
                 node_list[table[i].parent_id].children.push(node_list[table[i].id]);
             }
