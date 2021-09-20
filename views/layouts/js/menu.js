@@ -1,18 +1,21 @@
 class Menu{
-    list = '<ul class="navbar-nav">';
+    //list = '<ul class="navbar-nav">';
+    list
     constructor() {
         let self = this;
-        
         document.addEventListener('readystatechange', function(evt) {
             if (evt.target.readyState == "complete") {
-                var xhttp = new XMLHttpRequest();                
+                self.list = document.createElement('ul');
+                self.list.classList.add("navbar-item");
+                var xhttp = new XMLHttpRequest();
+
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {                
                         let response = JSON.parse(this.responseText);
                         let tree = self.buildList(response);
                     
-                        self.buildUlLi(tree);
-                        document.getElementById('menu').innerHTML = self.list + '<ul>';
+                        self.buildUlLi(tree, self.list);
+                        document.getElementById('menu').append(self.list);
                     }
                 };
                 xhttp.open("GET", "http://localhost:8080/?method=getmenu", true);
@@ -44,11 +47,11 @@ class Menu{
     
         return root;
     }
-    
-    
-    
-    
-    buildUlLi(tree) {
+
+
+
+
+    buildUlLi(tree, ul) {
         let self = this;
         let display = "";
         tree.children.forEach(function callbackFn(element, index, array) {
@@ -57,16 +60,47 @@ class Menu{
             else
                 display = "";
 
-            self.list += '<li class="nav-item" style="display:'+display+'">';
-            console.log(element);
-            if(parseInt(element.num_of_products)>0)
-                self.list += '<a class="nav-link" href="products?category='+element.id+'">'+element.name + ' ('+element.num_of_products+')</a><ul>';
-            else
-                self.list += '<div class="nav-link category-item">'+element.name + '</div><ul>';
+            let li = document.createElement('li');
+            li.classList.add("nav-item");
+            li.style.display = display;
 
-            self.buildUlLi(element);
-            self.list += '</ul></li>';
+            if(parseInt(element.num_of_products)>0) {
+                let a = document.createElement('a');
+                a.classList.add("nav-link");
+                a.href = "products?category="+element.id;
+                a.innerText = element.name + '('+element.num_of_products+')';
+                li.append(a);
+            }
+            else{
+                let div = document.createElement('div');
+                div.classList.add("nav-link");
+                div.classList.add("category-item");
+                div.innerText = element.name;
+                div.onclick = function(){self.openMenuItem(div)};
+                li.append(div);
+            }
+
+            let ulchild = document.createElement('ul');
+
+            self.buildUlLi(element, ulchild);
+            li.append(ulchild);
+            ul.append(li);
+
         });
+    }
+
+    openMenuItem(obj){
+      let items = obj.parentElement;
+      let li = items.getElementsByTagName('li');
+
+        for (let item of li) {
+            if(item.style.display == ""){
+                item.style.display="none";
+            }else{
+                item.style.display="";
+            }
+
+        }
     }
 }
 
