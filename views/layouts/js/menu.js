@@ -51,6 +51,7 @@ class Menu{
 
 
 
+
     buildUlLi(tree, ul) {
         let self = this;
         let display = "";
@@ -62,7 +63,9 @@ class Menu{
 
             let li = document.createElement('li');
             li.classList.add("nav-item");
+            li.classList.add("level"+element.lvl);
             li.style.display = display;
+
 
             if(parseInt(element.num_of_products)>0) {
                 let a = document.createElement('a');
@@ -76,7 +79,7 @@ class Menu{
                 div.classList.add("nav-link");
                 div.classList.add("category-item");
                 div.innerText = element.name;
-                div.onclick = function(){self.openMenuItem(div)};
+                div.onclick = function(){self.openMenuItem(div, element.lvl)};
                 li.append(div);
             }
 
@@ -89,9 +92,11 @@ class Menu{
         });
     }
 
-    openMenuItem(obj){
+    openMenuItem(obj, lvl){
       let items = obj.parentElement;
-      let li = items.getElementsByTagName('li');
+
+        let ul = items.querySelector('ul');
+        let li = ul.querySelectorAll("li.level"+(parseInt(lvl)+1));
 
         for (let item of li) {
             if(item.style.display == ""){
