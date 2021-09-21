@@ -82,7 +82,9 @@ class Menu{
                 div.classList.add("nav-link");
                 div.classList.add("category-item");
                 div.innerText = element.name;
-                div.onclick = function(){self.openMenuItem(div, element.lvl)};
+                div.onclick = function(){
+                    self.clickMenuItem(div, element.lvl)
+                };
                 li.append(div);
             }
 
@@ -95,46 +97,46 @@ class Menu{
         });
     }
 
-    openMenuItem(obj, lvl){
-        let items = obj.parentElement;
-        let ul = items.querySelector('ul');
-        let li = ul.querySelectorAll("li.level"+(parseInt(lvl)+1));
-        this.saveMenuState(items);
+    clickMenuItem(obj, lvl){
 
-        for (let item of li) {
+        let clickedItem = obj.parentElement;
+        let ul = clickedItem.querySelector('ul');
+        let li = ul.querySelectorAll("li.level"+(parseInt(lvl)+1));
+        this.openMenuItem(li);
+        this.saveMenuState(clickedItem.id);
+    }
+    openMenuItem(items){
+        for (let item of items) {
             if(item.style.display == ""){
                 item.style.display="none";
             }else{
                 item.style.display="";
             }
         }
-
     }
 
-    saveMenuState(items){
-        const index = this.clickedli.indexOf(items.id);
-        if (index > -1) {
-            this.clickedli.splice(index, 1);
-        }else{
-            this.clickedli.push(items.id);
-        }
-        localStorage.setItem('menustate', this.clickedli);
-
-        console.log(localStorage.getItem('menustate'));
+    saveMenuState(menuItem){
+        console.log(menuItem);
+        localStorage.setItem('menustate', menuItem);
     }
 
     loadMenuState(){
-        let items = localStorage.getItem('menustate').split(",");
-        console.log(items);
-        let obj = "";
-        for(let item of items){
-            obj = document.querySelector("#"+item);
-            let lvl = obj.className.split(" ")[1].replace("level","");
-            this.openMenuItem(obj, lvl);
-            //obj.style.display = "";
-            //console.log();
+        let item = '#'+localStorage.getItem('menustate');
+        if(item!= ""){
+
+            let menuItem = document.querySelector(item);
+            console.log(menuItem);
+            menuItem.style.display = "";
+            menuItem = menuItem.parentElement;
+            while(menuItem.id != 'menu'){
+                console.log(menuItem);
+                menuItem.style.display = "";
+                menuItem = menuItem.parentElement
+                //this.openMenuItem(menuItem.querySelectorAll('li'));
+            }
         }
     }
+
 }
 
 
