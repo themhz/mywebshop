@@ -66,7 +66,9 @@ class Menu{
             let li = document.createElement('li');
             li.id = 'li'+self.liid;
             li.classList.add("nav-item");
-            li.classList.add("level"+element.lvl);
+            //li.classList.add("level"+element.lvl);
+            li.setAttribute('level', element.lvl);
+
             li.style.display = display;
 
 
@@ -101,7 +103,8 @@ class Menu{
 
         let clickedItem = obj.parentElement;
         let ul = clickedItem.querySelector('ul');
-        let li = ul.querySelectorAll("li.level"+(parseInt(lvl)+1));
+        //let li = ul.querySelectorAll("li.level"+(parseInt(lvl)+1));
+        let li = ul.querySelectorAll('li[level="'+(parseInt(lvl)+1)+'"]');
         this.openMenuItem(li);
         this.saveMenuState(clickedItem.id);
     }
@@ -116,23 +119,30 @@ class Menu{
     }
 
     saveMenuState(menuItem){
-        console.log(menuItem);
-        localStorage.setItem('menustate', menuItem);
+        let items = [];
+        if (localStorage.getItem("menustate") === null || localStorage.getItem("menustate")==="") {
+            items[0] = menuItem;
+        }else{
+            items = localStorage.getItem("menustate").split(",");
+            if(!items.includes(menuItem)) {
+                items.push(menuItem);
+            }else{
+                let index = items.indexOf(menuItem);
+                items.splice(index,1);
+            }
+        }
+        localStorage.setItem('menustate', items);
     }
 
     loadMenuState(){
-        let item = '#'+localStorage.getItem('menustate');
-        if(item!= ""){
 
-            let menuItem = document.querySelector(item);
-            console.log(menuItem);
-            menuItem.style.display = "";
-            menuItem = menuItem.parentElement;
-            while(menuItem.id != 'menu'){
-                console.log(menuItem);
-                menuItem.style.display = "";
-                menuItem = menuItem.parentElement
-                //this.openMenuItem(menuItem.querySelectorAll('li'));
+        if (localStorage.getItem("menustate") !== null || localStorage.getItem("menustate")!=="") {
+            let menuItems = localStorage.getItem("menustate").split(",");
+            for(let item of menuItems){
+                let level = document.querySelector('#'+item).getAttribute('level');
+                let items = document.querySelector('#'+item).querySelector('ul').querySelectorAll('li[level="'+(parseInt(level)+1)+'"]');
+                // console.log(items);
+                this.openMenuItem(items);
             }
         }
     }
