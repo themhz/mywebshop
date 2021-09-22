@@ -584,8 +584,8 @@ h2 {
     padding: 0;
 }
 
-.selected{
-    color:#9acd48;
+.selected, .selected a{
+    color:#9acd48 !important;
 }
 .category-item:hover{
     cursor:pointer;

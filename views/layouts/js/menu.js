@@ -3,6 +3,7 @@ class Menu{
     liid
     clickedli
     constructor() {
+
         let self = this;
         this.liid = 0;
         this.clickedli = [];
@@ -20,6 +21,7 @@ class Menu{
                         self.buildUlLi(tree, self.list);
                         document.getElementById('menu').append(self.list);
                         self.loadMenuState();
+                        self.colorLink();
                     }
                 };
                 xhttp.open("GET", "http://localhost:8080/?method=getmenu", true);
@@ -53,6 +55,7 @@ class Menu{
     }
 
     buildUlLi(tree, ul) {
+
         let self = this;
         let display = "";
         this.liid ++;
@@ -100,15 +103,16 @@ class Menu{
 
     clickMenuItem(obj, lvl){
 
+        this.colorSelected(obj);
         let clickedItem = obj.parentElement;
         let ul = clickedItem.querySelector('ul');
-        //let li = ul.querySelectorAll("li.level"+(parseInt(lvl)+1));
         let li = ul.querySelectorAll('li[level="'+(parseInt(lvl)+1)+'"]');
-        // li.classList.add("selected");
         this.openMenuItem(li);
         this.saveMenuState(clickedItem.id);
     }
+
     openMenuItem(items){
+
         for (let item of items) {
             if(item.style.display == ""){
                 item.style.display="none";
@@ -119,6 +123,7 @@ class Menu{
     }
 
     saveMenuState(menuItem){
+
         let items = [];
         if (localStorage.getItem("menustate") === null || localStorage.getItem("menustate")==="") {
             items[0] = menuItem;
@@ -136,14 +141,32 @@ class Menu{
 
     loadMenuState(){
 
-        if (localStorage.getItem("menustate") !== null || localStorage.getItem("menustate")!=="") {
+        if (localStorage.getItem("menustate") !== null && localStorage.getItem("menustate")!=="") {
             let menuItems = localStorage.getItem("menustate").split(",");
             for(let item of menuItems){
+                this.colorSelected(document.querySelector('#'+item).querySelector('div'));
                 let level = document.querySelector('#'+item).getAttribute('level');
                 let items = document.querySelector('#'+item).querySelector('ul').querySelectorAll('li[level="'+(parseInt(level)+1)+'"]');
                 this.openMenuItem(items);
             }
         }
+    }
+
+    colorSelected(obj){
+
+        if(obj.classList.contains("selected")){
+            obj.classList.remove("selected");
+        }else{
+            obj.classList.add("selected");
+        }
+    }
+
+    colorLink(){
+        let path = window.location.pathname.substr(1, window.location.pathname.length);
+        let search = window.location.search;
+        let element = document.querySelector('#menu').querySelector('a[href="'+path+search+'"]');
+        this.colorSelected(element.parentElement);
+        //console.log(element.parentElement);
     }
 
 }

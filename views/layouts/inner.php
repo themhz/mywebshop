@@ -204,7 +204,7 @@
                     <!-- Side Bar Start -->
                     <div class="col-lg-4 sidebar">
                         <div class="sidebar-widget category">
-                            <h2 class="title">Category</h2>
+<!--                            <h2 class="title">Category</h2>-->
                             <nav class="navbar bg-light" id="menu">
                                 <!-- <ul class="navbar-nav">
                                     <li class="nav-item">
