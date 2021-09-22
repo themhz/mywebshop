@@ -550,7 +550,7 @@ h2 {
 }
 
 .header .nav-item{
-    
+    list-style:none;
 }
 /**********************************/
 /********* Breadcrumb CSS *********/
