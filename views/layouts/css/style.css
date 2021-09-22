@@ -552,6 +552,9 @@ h2 {
 .header .nav-item{
     list-style:none;
 }
+.nav-item{
+    list-style:none;
+}
 /**********************************/
 /********* Breadcrumb CSS *********/
 /**********************************/
@@ -581,6 +584,9 @@ h2 {
     padding: 0;
 }
 
+.selected{
+    color:#9acd48;
+}
 .category-item:hover{
     cursor:pointer;
     color:#9acd48;
@@ -2400,4 +2406,15 @@ h2 {
     .footer-bottom .template-by {
         text-align: center; 
     } 
+}
+
+.product-title{
+    /*height:100px;*/
+}
+.product-image{
+    /*height:300px;*/
+}
+
+.widget-slider,.brands, .tag,.brand {
+    display:none;
 }

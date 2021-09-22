@@ -138,7 +138,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="product-search">
-                                                <input type="email" value="Search">
+                                                <input type="email" placeholder="Search">
                                                 <button><i class="fa fa-search"></i></button>
                                             </div>
                                         </div>

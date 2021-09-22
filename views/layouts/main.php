@@ -488,7 +488,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form">
-                            <input type="email" value="Your email here">
+                            <input type="email" placeholder="Your email here">
                             <button>Submit</button>
                         </div>
                     </div>

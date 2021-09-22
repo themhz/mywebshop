@@ -1,5 +1,4 @@
 class Menu{
-    //list = '<ul class="navbar-nav">';
     list
     liid
     clickedli
@@ -105,6 +104,7 @@ class Menu{
         let ul = clickedItem.querySelector('ul');
         //let li = ul.querySelectorAll("li.level"+(parseInt(lvl)+1));
         let li = ul.querySelectorAll('li[level="'+(parseInt(lvl)+1)+'"]');
+        // li.classList.add("selected");
         this.openMenuItem(li);
         this.saveMenuState(clickedItem.id);
     }
@@ -141,7 +141,6 @@ class Menu{
             for(let item of menuItems){
                 let level = document.querySelector('#'+item).getAttribute('level');
                 let items = document.querySelector('#'+item).querySelector('ul').querySelectorAll('li[level="'+(parseInt(level)+1)+'"]');
-                // console.log(items);
                 this.openMenuItem(items);
             }
         }
