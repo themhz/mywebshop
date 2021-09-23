@@ -22,7 +22,6 @@ class Controller extends baseController{
          $params = [];
          $p = new Products();
          $sql = "SELECT * from products ";
-
         if(isset($requestparams['product_id'])){
             $sql .= ' where id = :product_id';
             $params = [':product_id' => $requestparams['product_id']];
@@ -32,7 +31,7 @@ class Controller extends baseController{
         
         
          $view = new view($this->app->request);
-         echo $view->render('main', $this->app->request->path() , $products);
+         echo $view->render('inner', $this->app->request->path() , $products);
     }
 
     public function put(){
