@@ -43,7 +43,6 @@ class View
         foreach ($params as $key => $value) {
             $$key = $value;
         }
-
         //make the session variables available for the layout via the session object
         // $session = 'session';
          $session = new Session();

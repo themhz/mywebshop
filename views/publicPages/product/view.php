@@ -1,15 +1,3 @@
-<?php foreach ($params as $rows) {
-
-    $image = $rows->image;
-    $id = $rows->id;
-    $name = $rows->name;
-    $description = $rows->description;
-    $price = $rows->price;
-
-}
-?>
-
-
 
 <!-- Product Detail Start -->
 <div class="product-detail">
@@ -20,13 +8,15 @@
                     <div class="row align-items-center">
                         <div class="col-md-5">
                             <div class="product-slider-single normal-slider">
-                                <img src="../../../userfiles/products/<?php echo $image; ?>" alt="Product Image">
-                                <img src="../../../userfiles/products/<?php echo $image; ?>" alt="Product Image">
-                                <img src="../../../userfiles/products/<?php echo $image; ?>" alt="Product Image">
+                                <?php foreach($images as $image){?>
+                                    <img src="../../../userfiles/products/<?php echo $image->image; ?>" alt="Product Image">
+                                <?php } ?>
+
                             </div>
                             <div class="product-slider-single-nav normal-slider">
-                                <div class="slider-nav-img"><img src="../../../userfiles/products/<?php echo $image; ?>" alt="Product Image"></div>
-                                <div class="slider-nav-img"><img src="../../../userfiles/products/<?php echo $image; ?>" alt="Product Image"></div>
+                                <?php foreach($images as $image){ ?>
+                                    <div class="slider-nav-img"><img src="../../../userfiles/products/<?php echo $image->image; ?>" alt="Product Image"></div>
+                                <?php } ?>
                             </div>
                         </div>
                         <div class="col-md-7">

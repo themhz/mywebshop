@@ -5,7 +5,7 @@ foreach ($params as $rows) { ?>
     <div class="col-md-4">
         <div class="product-item">
             <div class="product-title">
-                <a href="product"><?php echo $rows->name ?></a>
+                <a href="product?product_id=<?php echo $rows->id?>"><?php echo $rows->name ?></a>
                 <div class="ratting">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
