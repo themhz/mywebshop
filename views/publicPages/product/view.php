@@ -417,52 +417,11 @@
         if (evt.target.readyState == "complete") {
             let btnAddToBasket = document.getElementById("btnAddToBasket");
             btnAddToBasket.onclick = function(){
-                alert(1);
+                basket.addToBasket('<?= $id ?>', '<?= $name ?>', '<?= $price ?>');
             };
 
         }
     });
     //btnAddToBasket
-    function addToBasket() {
-        let id = '<?= $id ?>';
-        let name = '<?= $name ?>';
-        let price = '<?= $price ?>';
-        let item = {
-            'id': id,
-            'name': name,
-            'qty': 1,
-            'price': price
-        };
 
-        let basket = localStorage.getItem('basket') ? JSON.parse(localStorage.getItem('basket')) : [];
-
-
-        //Basket doesnt have items
-        if (basket.length == 0) {
-            localStorage.setItem('basket', JSON.stringify([item]));
-            return;
-
-        } else {
-
-            //Check if item exists
-            for (i = 0; i < basket.length; i++) {
-                if (basket[i].id == id) {
-                    basket[i].qty++;
-                    localStorage.removeItem('basket');
-                    localStorage.setItem('basket', JSON.stringify(basket));
-                    return;
-                }
-            }
-
-            //Item does not exist
-            basket.push(item);
-            basket.qty++;
-            basket.updateQtyPlaceHolder();
-            localStorage.removeItem('basket');
-            localStorage.setItem('basket', JSON.stringify(basket));
-            return;
-
-        }
-
-    }
 </script>

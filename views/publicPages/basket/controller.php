@@ -70,7 +70,7 @@ class Controller extends baseController
         $vatcodes =  $vatcodes->select();
 
 
-        echo $this->view->render('main', 'basket', ["paymentMethods"=>$paymentMethods->select(), "shippingMethods" => $shippingMethods->select(), "locations" =>$locations, "vatcodes"=>$vatcodes, "shippingMethodsRatings" => $shippingMethodsRatings->select()], 'public');
+        echo $this->view->render('user', 'basket', ["paymentMethods"=>$paymentMethods->select(), "shippingMethods" => $shippingMethods->select(), "locations" =>$locations, "vatcodes"=>$vatcodes, "shippingMethodsRatings" => $shippingMethodsRatings->select()], 'public');
     }
 
     public function put()

@@ -128,41 +128,18 @@
         <!-- Breadcrumb End -->
         
         <!-- Product List Start -->
-        <div class="product-view">
-            <div class="container-fluid">
+        <div class="product-view" >
+            <div class="container-fluid" >
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-11" style="background:white;">
                         <div class="row">
                             {{VIEW}}
                         </div>
-                        
-                        <!-- Pagination Start -->
-                        <div class="col-md-12">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1">Previous</a>
-                                    </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <!-- Pagination Start -->
+
                     </div>           
                     
                     <!-- Side Bar Start -->
                     <div class="col-lg-4 sidebar">
-                        <div class="sidebar-widget category">
-<!--                            <h2 class="title">Category</h2>-->
-                            <nav class="navbar bg-light" id="menu">
-
-                            </nav>
-                        </div>
                         
                         <div class="sidebar-widget widget-slider">
                             <div class="sidebar-slider normal-slider">

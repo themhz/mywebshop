@@ -292,6 +292,7 @@ class Basket {
 
     updateQtyPlaceHolder(){
         let basket = JSON.parse(localStorage.getItem("basket"));
+        this.qty = 0;
         for(let i=0;i<basket.length;i++){
             this.qty += basket[i].qty;
         }
@@ -300,6 +301,49 @@ class Basket {
     }
 
     getCartQty(){
+
+    }
+
+    addToBasket(id, name, price) {
+
+        let item = {
+            'id': id,
+            'name': name,
+            'qty': 1,
+            'price': price
+        };
+
+        let basket = localStorage.getItem('basket') ? JSON.parse(localStorage.getItem('basket')) : [];
+
+        //Basket doesnt have items
+        if (basket.length == 0) {
+            localStorage.setItem('basket', JSON.stringify([item]));
+            this.updateQtyPlaceHolder();
+            return;
+
+        } else {
+
+            //Check if item exists
+            for (let i = 0; i < basket.length; i++) {
+                if (basket[i].id == id) {
+                    basket[i].qty++;
+                    localStorage.removeItem('basket');
+                    localStorage.setItem('basket', JSON.stringify(basket));
+                    this.updateQtyPlaceHolder();
+                    return;
+                }
+            }
+
+            //Item does not exist
+            basket.push(item);
+            // basket.qty++;
+            //this.updateQtyPlaceHolder();
+            localStorage.removeItem('basket');
+            localStorage.setItem('basket', JSON.stringify(basket));
+            this.updateQtyPlaceHolder();
+            return;
+
+        }
 
     }
 }
