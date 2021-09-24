@@ -459,8 +459,11 @@
         <!-- Template Javascript -->
         <script src="views/layouts/js/main.js"></script>
         <script src="views/layouts/js/menu.js"></script>
+        <script src="views/layouts/js/basket.js"></script>
         <script>
             let menu = new Menu();
+            let basket = new Basket();
+            basket.updateQtyPlaceHolder();
         </script>
     </body>
 </html>

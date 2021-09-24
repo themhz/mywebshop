@@ -12,6 +12,7 @@ class Basket {
     locations = null;
     vatcodes = null;
     rate = 0;
+    qty = 0;
 
     constructor(tableId, basketname="basket") {
         this.tableId = tableId;
@@ -37,7 +38,6 @@ class Basket {
             newRow.insertCell();
             newRow2.insertCell();
         }
-
     }
 
     addrows(data, cols) {
@@ -129,6 +129,7 @@ class Basket {
             if (id == basket[i].id) {
                 basket.splice(i, 1);
                 localStorage.removeItem(this.basketname);
+                this.qty--;
                 localStorage.setItem(this.basketname, JSON.stringify(basket));
             }
         }
@@ -221,8 +222,6 @@ class Basket {
 
         table.rows[table.rows.length-1].cells[2].append(select);
         table.rows[table.rows.length-1].cells[1].append("Επέλεξε τρόπο αποστολής");
-        // console.log(this.shippingmethod);
-        // select.value = this.shippingmethod;
         select.value = localStorage.getItem("shippingmethod");
         this.showShippingForm();
     }
@@ -269,6 +268,7 @@ class Basket {
         this.loadShippingMethods();
         this.calculateTotalVatId();
         this.calculateTotalSum();
+        this.updateQtyPlaceHolder();
     }
 
 
@@ -276,9 +276,9 @@ class Basket {
         let vatcodes = document.getElementById("location");
         let selected = vatcodes.options[vatcodes.selectedIndex];
         let vatid = selected.getAttribute("data-vatid");
-        //let rate = 0;
+
         for(let i=0; i<this.vatcodes.length;i++){
-          //console.log(this.vatcodes[i].id);
+
             if(this.vatcodes[i].id == vatid){
                 //console.log(this.vatcodes[i].rate);
                 this.rate = this.vatcodes[i].rate;
@@ -287,6 +287,19 @@ class Basket {
         }
 
         this.total = ((this.total * this.rate)/100) + this.total;
+
+    }
+
+    updateQtyPlaceHolder(){
+        let basket = JSON.parse(localStorage.getItem("basket"));
+        for(let i=0;i<basket.length;i++){
+            this.qty += basket[i].qty;
+        }
+
+        document.querySelector(".cart").querySelector("span").innerText = "("+this.qty+")";
+    }
+
+    getCartQty(){
 
     }
 }

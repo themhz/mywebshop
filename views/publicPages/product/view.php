@@ -3,7 +3,7 @@
 <div class="product-detail">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="product-detail-top">
                     <div class="row align-items-center">
                         <div class="col-md-5">
@@ -59,7 +59,8 @@
                                     </div>
                                 </div>
                                 <div class="action">
-                                    <a class="btn" href="#"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
+<!--                                    <a class="btn" href="#"><i class="fa fa-shopping-cart"></i>Add to Cart</a>-->
+                                    <button class="btn" id="btnAddToBasket"><i class="fa fa-shopping-cart"></i>Add to Cart</button>
                                     <a class="btn" href="#"><i class="fa fa-shopping-bag"></i>Buy Now</a>
                                 </div>
                             </div>
@@ -85,7 +86,7 @@
                             <div id="description" class="container tab-pane active">
                                 <h4>Product description</h4>
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In condimentum quam ac mi viverra dictum. In efficitur ipsum diam, at dignissim lorem tempor in. Vivamus tempor hendrerit finibus. Nulla tristique viverra nisl, sit amet bibendum ante suscipit non. Praesent in faucibus tellus, sed gravida lacus. Vivamus eu diam eros. Aliquam et sapien eget arcu rhoncus scelerisque. Suspendisse sit amet neque neque. Praesent suscipit et magna eu iaculis. Donec arcu libero, commodo ac est a, malesuada finibus dolor. Aenean in ex eu velit semper fermentum. In leo dui, aliquet sit amet eleifend sit amet, varius in turpis. Maecenas fermentum ut ligula at consectetur. Nullam et tortor leo.
+                                    <?php echo $description; ?>
                                 </p>
                             </div>
                             <div id="specification" class="container tab-pane fade">
@@ -143,7 +144,7 @@
 
                 <div class="product">
                     <div class="section-header">
-                        <h1>Related Products</h1>
+                        <h1>Σχετικά προϊόντα</h1>
                     </div>
 
                     <div class="row align-items-center product-slider product-slider-3">
@@ -161,7 +162,7 @@
                                 </div>
                                 <div class="product-image">
                                     <a href="product-detail.html">
-                                        <img src="img/product-10.jpg" alt="Product Image">
+                                        <img src="../../../userfiles/products/3ea441c4.jpg" alt="Product Image">
                                     </a>
                                     <div class="product-action">
                                         <a href="#"><i class="fa fa-cart-plus"></i></a>
@@ -189,7 +190,7 @@
                                 </div>
                                 <div class="product-image">
                                     <a href="product-detail.html">
-                                        <img src="img/product-8.jpg" alt="Product Image">
+                                        <img src="../../../userfiles/products/3ed06987.jpg" alt="Product Image">
                                     </a>
                                     <div class="product-action">
                                         <a href="#"><i class="fa fa-cart-plus"></i></a>
@@ -217,7 +218,7 @@
                                 </div>
                                 <div class="product-image">
                                     <a href="product-detail.html">
-                                        <img src="img/product-6.jpg" alt="Product Image">
+                                        <img src="../../../userfiles/products/4d0bed19.jpg" alt="Product Image">
                                     </a>
                                     <div class="product-action">
                                         <a href="#"><i class="fa fa-cart-plus"></i></a>
@@ -245,7 +246,7 @@
                                 </div>
                                 <div class="product-image">
                                     <a href="product-detail.html">
-                                        <img src="img/product-4.jpg" alt="Product Image">
+                                        <img src="../../../userfiles/products/4d1003e2.jpg" alt="Product Image">
                                     </a>
                                     <div class="product-action">
                                         <a href="#"><i class="fa fa-cart-plus"></i></a>
@@ -273,7 +274,7 @@
                                 </div>
                                 <div class="product-image">
                                     <a href="product-detail.html">
-                                        <img src="img/product-2.jpg" alt="Product Image">
+                                        <img src="../../../userfiles/products/4dd2e2f8.jpg" alt="Product Image">
                                     </a>
                                     <div class="product-action">
                                         <a href="#"><i class="fa fa-cart-plus"></i></a>
@@ -293,28 +294,6 @@
 
             <!-- Side Bar Start -->
             <div class="col-lg-4 sidebar">
-                <div class="sidebar-widget category">
-                    <h2 class="title">Category</h2>
-                    <nav class="navbar bg-light">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fa fa-female"></i>Fashion & Beauty</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fa fa-child"></i>Kids & Babies Clothes</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fa fa-tshirt"></i>Men & Women Clothes</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fa fa-mobile-alt"></i>Gadgets & Accessories</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fa fa-microchip"></i>Electronics & Accessories</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
 
                 <div class="sidebar-widget widget-slider">
                     <div class="sidebar-slider normal-slider">
@@ -433,3 +412,57 @@
 </div>
 <!-- Product Detail End -->
 
+<script>
+    document.addEventListener('readystatechange', function(evt) {
+        if (evt.target.readyState == "complete") {
+            let btnAddToBasket = document.getElementById("btnAddToBasket");
+            btnAddToBasket.onclick = function(){
+                alert(1);
+            };
+
+        }
+    });
+    //btnAddToBasket
+    function addToBasket() {
+        let id = '<?= $id ?>';
+        let name = '<?= $name ?>';
+        let price = '<?= $price ?>';
+        let item = {
+            'id': id,
+            'name': name,
+            'qty': 1,
+            'price': price
+        };
+
+        let basket = localStorage.getItem('basket') ? JSON.parse(localStorage.getItem('basket')) : [];
+
+
+        //Basket doesnt have items
+        if (basket.length == 0) {
+            localStorage.setItem('basket', JSON.stringify([item]));
+            return;
+
+        } else {
+
+            //Check if item exists
+            for (i = 0; i < basket.length; i++) {
+                if (basket[i].id == id) {
+                    basket[i].qty++;
+                    localStorage.removeItem('basket');
+                    localStorage.setItem('basket', JSON.stringify(basket));
+                    return;
+                }
+            }
+
+            //Item does not exist
+            basket.push(item);
+            basket.qty++;
+            basket.updateQtyPlaceHolder();
+            localStorage.removeItem('basket');
+            localStorage.setItem('basket', JSON.stringify(basket));
+            return;
+
+        }
+
+    }
+</script>
