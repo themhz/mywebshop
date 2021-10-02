@@ -154,13 +154,13 @@
                     <div class="col-md-3">
                         <div class="header-img">
                             <div class="img-item">
-                                <img src="views/layouts/img/category-1.jpg" />
+                                <img src="../../userfiles/products/0m5601.jpg" />
                                 <a class="img-text" href="">
                                     <p>Some text goes here that describes the image</p>
                                 </a>
                             </div>
                             <div class="img-item">
-                                <img src="views/layouts/img/category-2.jpg" />
+                                <img src="../../userfiles/products/1045a07f6.jpg" />
                                 <a class="img-text" href="">
                                     <p>Some text goes here that describes the image</p>
                                 </a>
@@ -182,8 +182,8 @@
                             <h2>Get in Touch</h2>
                             <div class="contact-info">
                                 <p><i class="fa fa-map-marker"></i>123 E Store, Los Angeles, USA</p>
-                                <p><i class="fa fa-envelope"></i>email@example.com</p>
-                                <p><i class="fa fa-phone"></i>+123-456-7890</p>
+                                <p><i class="fa fa-envelope"></i>info@kipodomi-tools.gr</p>
+                                <p><i class="fa fa-phone"></i>+30-2104651518</p>
                             </div>
                         </div>
                     </div>

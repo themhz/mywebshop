@@ -215,6 +215,24 @@ class Products extends Model
     {
         $this->regdate = $regdate;
     }
+
+    public function getProductsByCategory($requestparams){
+        $sql = "SELECT a.id, a.name, a.description, min(a.price) price, d.image, c.name categoryName, c.id categoryId 
+         FROM products a 
+         inner join product_categories  b on  a.id = b.product_id
+         inner join categories  c on c.id = b.category_id
+         inner join product_images d on d.product_id = a.id
+        ";
+
+        if(isset($requestparams['category'])){
+            $sql .= ' where c.id = :category_id ';
+            $params = [':category_id' => $requestparams['category']];
+        }
+        $sql .= '  group by a.id 
+        limit 0,10';
+        
+        return $this->customselect($sql, $params);
+    }
         
 
 }

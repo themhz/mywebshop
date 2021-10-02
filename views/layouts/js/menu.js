@@ -24,7 +24,8 @@ class Menu{
                         self.colorLink();
                     }
                 };
-                xhttp.open("GET", "http://localhost:8080/?method=getmenu", true);
+                //console.log(window.location.origin);
+                xhttp.open("GET", window.location.origin+"?method=getmenu", true);
                 xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
                 xhttp.send();       
             }

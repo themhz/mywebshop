@@ -449,7 +449,7 @@
 <!-- Recent Product End -->
 
 <!-- Review Start -->
-<div class="review">
+<!-- <div class="review">
     <div class="container-fluid">
         <div class="row align-items-center review-slider normal-slider">
             <div class="col-md-6">
@@ -517,6 +517,6 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Review End -->
         

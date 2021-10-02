@@ -293,11 +293,14 @@ class Basket {
     updateQtyPlaceHolder(){
         let basket = JSON.parse(localStorage.getItem("basket"));
         this.qty = 0;
-        for(let i=0;i<basket.length;i++){
-            this.qty += basket[i].qty;
+        if(basket!=null){
+            for(let i=0;i<basket.length;i++){
+                this.qty += basket[i].qty;
+            }
+    
+            document.querySelector(".cart").querySelector("span").innerText = "("+this.qty+")";
         }
-
-        document.querySelector(".cart").querySelector("span").innerText = "("+this.qty+")";
+        
     }
 
     getCartQty(){

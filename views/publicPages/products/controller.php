@@ -27,26 +27,18 @@ class Controller extends baseController{
         $requestparams = $this->app->request->body();
 
         $params = [];
-         $p = new Products();
-         $sql = "SELECT a.id, a.name, a.description, min(a.price) price, d.image, c.name categoryName, c.id categoryId FROM products a 
-         inner join product_categories  b on  a.id = b.product_id
-         inner join categories  c on c.id = b.category_id
-         inner join product_images d on d.product_id = a.id
-        ";
+        $p = new Products();
+        $products = $p->getProductsByCategory($requestparams);
+         
+             
+        // echo $sql;
+        // die();
 
-        if(isset($requestparams['category'])){
-            $sql .= ' where c.id = :category_id ';
-            $params = [':category_id' => $requestparams['category']];
-        }
-        $sql .= '  group by a.id ';
-        
-        //where c.id =:category_id
-
-         $products = $p->customselect($sql, $params);
         
         
-         $view = new view($this->app->request);
-         echo $view->render('inner', $this->app->request->path() , $products);
+        
+        $view = new view($this->app->request);
+        echo $view->render('inner', $this->app->request->path() , $products);
     }
 
     public function put(){
