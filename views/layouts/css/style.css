@@ -694,6 +694,7 @@ h2 {
 /**********************************/
 .product-item {
     position: relative;
+    padding-top:10px;
 }
 
 .product-item .product-title {

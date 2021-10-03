@@ -287,4 +287,20 @@ class Model
             $date = new \DateTime();
             return $date->format('Y/m/d H:i:s');
     }
+
+    public function counter($sql, $params){
+        $db = Database::getInstance();  
+
+        $sql = "select count(*) totalrows from ( ". $sql .") as selector";
+        $sth = $db->dbh->prepare($sql);
+        $sth->execute($params);        
+        $results = $sth->fetchColumn();
+
+        return $results;
+
+    }
+    public function calculateNumberOfPages($rows, $pagelength){
+        $pages = $rows/$pagelength;
+        return $pages;
+    }
 }

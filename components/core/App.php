@@ -30,7 +30,7 @@ use mywebshop\components\core\Router;
  * About
  * ----------------------------------------------------------------
  * Initialize the web application components
- * It is where everything begins. 
+ * Everything begins here. 
  * 
  * 
  * Start reading from he start method

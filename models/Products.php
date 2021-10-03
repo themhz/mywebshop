@@ -1,6 +1,7 @@
 <?php
 
 namespace mywebshop\models;
+
 use mywebshop\components\core\Model;
 use \DateTime;
 
@@ -216,7 +217,8 @@ class Products extends Model
         $this->regdate = $regdate;
     }
 
-    public function getProductsByCategory($requestparams){
+    public function getProductsByCategory($requestparams)
+    {
         $sql = "SELECT a.id, a.name, a.description, min(a.price) price, d.image, c.name categoryName, c.id categoryId 
          FROM products a 
          inner join product_categories  b on  a.id = b.product_id
@@ -224,15 +226,30 @@ class Products extends Model
          inner join product_images d on d.product_id = a.id
         ";
 
-        if(isset($requestparams['category'])){
+        $params = [];
+        if (isset($requestparams['category'])) {
             $sql .= ' where c.id = :category_id ';
             $params = [':category_id' => $requestparams['category']];
         }
-        $sql .= '  group by a.id 
-        limit 0,10';
-        
-        return $this->customselect($sql, $params);
-    }
+        $sql .= '  group by a.id ';
+
+        $sql = $this->calculatePaging($sql, $params, $requestparams);
         
 
+        return [ $this->customselect($sql[0], $params, $requestparams), $sql[1]];
+    }
+
+    public function calculatePaging($sql, $params, $requestparams)
+    {
+        $pagelength = 10;
+        $numberOfProducts = $this->counter($sql, $params);
+        $pages = $this->calculateNumberOfPages($numberOfProducts, $pagelength);
+
+        $page = empty($requestparams['page']) ? 0 : $requestparams['page'] - 1;
+
+        $page = $page * $pagelength;
+        $sql .= " limit $page,$pagelength ";
+
+        return [$sql, ceil($pages)];
+    }
 }

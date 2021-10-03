@@ -29,16 +29,11 @@ class Controller extends baseController{
         $params = [];
         $p = new Products();
         $products = $p->getProductsByCategory($requestparams);
-         
-             
-        // echo $sql;
-        // die();
-
-        
+              
         
         
         $view = new view($this->app->request);
-        echo $view->render('inner', $this->app->request->path() , $products);
+            echo $view->render('inner', $this->app->request->path() , $products);
     }
 
     public function put(){
@@ -47,5 +42,14 @@ class Controller extends baseController{
 
     public function delete(){
         echo "delete";
+    }
+
+    public function getProducts(){
+        $requestparams = $this->app->request->body();
+
+        $params = [];
+        $p = new Products();
+        $products = $p->getProductsByCategory($requestparams);
+        echo json_encode($products[0]);
     }
 }
