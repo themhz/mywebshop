@@ -38,7 +38,7 @@ class View
         return str_replace('{{VIEW}}', $viewContent, $layoutContent);
     }
 
-    protected function layout($layout = 'main', $params, $menu = "")
+    protected function layout($layout = 'main', $params=[], $menu = "")
     {
         foreach ($params as $key => $value) {
             $$key = $value;
@@ -50,8 +50,8 @@ class View
          if(isset($session->getAll()['userdetails'] )){
             foreach($session->getAll()['userdetails'] as $key => $value) {
                 $$key = $value;
-             }
-         }         
+            }
+         }
          
 
         ob_start();
