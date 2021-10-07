@@ -15,4 +15,6 @@ class Vatcodes extends Model
         parent::__construct('vatcodes');
     }
 
+
+
 }

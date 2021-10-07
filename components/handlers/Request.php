@@ -65,7 +65,9 @@ class Request
 
             if(in_array("application/json", $contenttype)){
                 $json = file_get_contents('php://input');
-                $body = json_decode($json);
+                $body = (Array)json_decode($json);
+
+
 
             }else{
                 foreach ($_POST as $key => $value) {

@@ -27,6 +27,7 @@ class Controller extends baseController
     public function post()
     {
         $products = $this->app->request->body();
+        echo "we create the order here";
         //print_r($products);
         //$order = new Order($this->app->session);
         //$order->addProducts($products);

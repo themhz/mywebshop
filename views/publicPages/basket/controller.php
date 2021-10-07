@@ -15,6 +15,7 @@ use mywebshop\models\ShippingMethods;
 use mywebshop\models\Locations;
 use mywebshop\models\Vatcodes;
 use mywebshop\models\ShippingMethodRatings;
+use mywebshop\models\Orders;
 
 use SampleWebApp\models\Products;
 
@@ -34,8 +35,10 @@ class Controller extends baseController
 
         $session = new Session();
         //Calculate total budget
-        $products = $this->app->request->body();
+        $basket = $this->app->request->body();
 
+//        print_r($basket);
+//        die();
         //print_r($session->getAll());
 //        foreach($products as $product){
 //            echo $product->id."\n";
@@ -44,8 +47,14 @@ class Controller extends baseController
 //            echo $product->price."\n";
 //        }
 
-        $order = new Order($this->app->session);
-        $order->addProducts($products);
+         $order = new Orders();
+         $order->create($basket);
+
+
+
+//        $order = new Order($this->app->session);
+//        $order->addProducts($basket);
+
         //echo $order->getId();
 //
 //        $order_items = new Order_items(1, 2);

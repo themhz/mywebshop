@@ -159,6 +159,16 @@ class Basket {
     checkout(){
 
         let products = localStorage.getItem(this.basketname) ? JSON.parse(localStorage.getItem(this.basketname)) : [];
+        let paymentMethod = {"paymentMethod" : 1};
+        let shippingMethod = {"shippingMethod": 2};
+
+        let location = {"location": document.querySelector("#location option:checked").value};
+        let zipcode = {"zipcode": document.querySelector("#zipcode").value};
+        let address = {"address": document.querySelector("#address").value};
+        let email = {"email": document.querySelector("#email").value};
+        let vatid = {"vatid":document.querySelector("#location option:checked").getAttribute('data-vatid')};
+
+        let basket = {products, paymentMethod, shippingMethod, location, vatid, zipcode, address, email};
         let xhttp = new XMLHttpRequest();
         let self = this;
         xhttp.onreadystatechange = function() {
@@ -166,9 +176,10 @@ class Basket {
                 var response = eval('(' + this.responseText + ')');
             }
         };
+
         xhttp.open("post", "basket", true);
         xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhttp.send(JSON.stringify(products));
+        xhttp.send(JSON.stringify(basket));
 
     }
 
@@ -295,9 +306,9 @@ class Basket {
         this.qty = 0;
         if(basket!=null){
             for(let i=0;i<basket.length;i++){
-                this.qty += basket[i].qty;
+                this.qty += parseInt(basket[i].qty);
             }
-    
+
             document.querySelector(".cart").querySelector("span").innerText = "("+this.qty+")";
         }
         
