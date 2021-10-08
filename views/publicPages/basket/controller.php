@@ -47,9 +47,9 @@ class Controller extends baseController
 //            echo $product->price."\n";
 //        }
 
+        //Create the order
          $order = new Orders();
-         $order->create($basket);
-
+         $this->respond($order->create($basket));
 
 
 //        $order = new Order($this->app->session);

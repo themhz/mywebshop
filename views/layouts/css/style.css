@@ -2419,3 +2419,7 @@ h2 {
 .widget-slider,.brands, .tag,.brand {
     display:none;
 }
+
+.row{
+    margin: auto !important;
+}
