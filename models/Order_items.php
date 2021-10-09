@@ -30,9 +30,9 @@ class Order_items extends Model
             foreach($basket["products"] as $basketitem){
                 $product = $this->findProduct($basketitem->id)[0];
                 $this->product_id = $product->id;
-                $this->amount = $product->price;
-                $this->amount_with_tax = $this->calculateTotalCostWithVat($basket);
                 $this->qty = $basketitem->qty;
+                $this->amount = $product->price *  $this->qty;
+                $this->amount_with_tax = $this->calculateTotalCostWithVat($basket);
                 $this->insert();
                 $count++;
             }
