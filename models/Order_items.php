@@ -1,24 +1,65 @@
 <?php
 namespace mywebshop\models;
 use mywebshop\components\core\Model;
+use mywebshop\models\products;
+use mywebshop\models\vatcodes;
 
 class Order_items extends Model
 {
-    private int $id;
-    private int $order_id;
-    private int $product_id;
-    private float $amount;
-    private float $amount_with_tax;
-    private Date $regdate;
+    public int $order_id;
+    public int $product_id;
+    public float $amount;
+    public float $amount_with_tax;
+    public int $qty;
+    public Date $regdate;
 
     /**
      * @param $id
      * @param $order_id
      */
-    public function __construct($id, $order_id)
+    public function __construct($order_id)
     {
-        $this->id = $id;
+        parent::__construct('order_items');
         $this->order_id = $order_id;
+    }
+
+    public function create($basket){
+
+        try{
+            $count =0;
+            foreach($basket["products"] as $basketitem){
+                $product = $this->findProduct($basketitem->id)[0];
+                $this->product_id = $product->id;
+                $this->amount = $product->price;
+                $this->amount_with_tax = $this->calculateTotalCostWithVat($basket);
+                $this->qty = $basketitem->qty;
+                $this->insert();
+                $count++;
+            }
+
+            return ["result"=>"success", "message"=>"successfully added $count products in orders for order $this->order_id"];
+        }catch (\Exception $ex){
+            return ["result"=>"error", "message"=>$ex->getMessage()];
+        }
+    }
+
+    public function findProduct($id){
+        $product = new Products();
+        $product = $product->select(["id ="=>$id]);
+        return $product;
+
+    }
+
+    public function getVatCodeRate($vatid){
+
+        $vatrate = new Vatcodes();
+        return $vatrate->select(["id ="=>$vatid])[0]->rate;
+    }
+
+    public function calculateTotalCostWithVat($basket): float{
+        $this->amount_with_tax= ($this->getVatCodeRate($basket["vatid"]->vatid) * $this->amount /100) + $this->amount;
+        return $this->amount_with_tax;
+
     }
 
     /**

@@ -24,8 +24,8 @@ class Orders extends Model
         parent::__construct('orders');
     }
 
-    public function create($basket) : int{
-        //print_r($basket);
+    public function create($basket) : array{
+
         $this->user_id = -1; //unknown or not logged in-1
         $this->email = $basket["email"]->email;
         $this->shipping_address = $basket["address"]->address;
@@ -38,10 +38,14 @@ class Orders extends Model
 
         $errors = [];
         $errors = $this->validate();
+
         if(count($errors)>0){
-            return $errors;
+
+            return [$errors, "error creating order"];
         }else{
-            return $this->insert();
+
+            $this->id =$this->insert();
+            return [$this->id, "success"];
         }
 
 
@@ -84,6 +88,7 @@ class Orders extends Model
 
         return $errors;
     }
+
 
     public function rules() :array{
         return [

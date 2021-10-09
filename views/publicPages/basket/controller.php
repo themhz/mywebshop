@@ -17,6 +17,7 @@ use mywebshop\models\Vatcodes;
 use mywebshop\models\ShippingMethodRatings;
 use mywebshop\models\Orders;
 
+
 use SampleWebApp\models\Products;
 
 
@@ -49,7 +50,19 @@ class Controller extends baseController
 
         //Create the order
          $order = new Orders();
-         $this->respond($order->create($basket));
+         $result = $order->create($basket);
+
+
+         if($result[1]=="success"){
+             $order_items = new Order_items($result[0]);
+             $this->respond($order_items->create($basket));
+         }else{
+             return $result;
+         }
+
+
+
+
 
 
 //        $order = new Order($this->app->session);

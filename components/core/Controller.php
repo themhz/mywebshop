@@ -40,7 +40,7 @@ abstract class Controller
     }
 
     public function respond($data){
-        echo json_decode($data);
+        echo json_encode($data);
     }
 
 
