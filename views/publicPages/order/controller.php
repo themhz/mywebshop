@@ -41,10 +41,7 @@ class Controller extends baseController
     public function get()
     {
 
-//        $paymentMethods = new PaymentMethods();
-//        $shippingMethods = new ShippingMethods();
-//
-//        echo $this->view->render('main', 'basket', ["paymentMethods"=>$paymentMethods->select(), "shippingMethods" => $shippingMethods->select()], 'public');
+        echo $this->view->render('user', 'order', [], 'public');
     }
 
     public function put()

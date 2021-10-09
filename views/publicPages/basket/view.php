@@ -49,12 +49,11 @@
   let vatcodes = JSON.parse('<?php echo json_encode($vatcodes); ?>');
   let shippingMethodsRatings = JSON.parse('<?php echo json_encode($shippingMethodsRatings); ?>');
 
-  let basket = null;
+  //let basket = null;
   document.addEventListener('readystatechange', function(evt) {
 
     if (evt.target.readyState == "complete") {
 
-        console.log(shippingMethodsRatings);
         basket = new Basket('basket');
         populateDropDown("location", locations);
 

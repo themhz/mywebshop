@@ -41,7 +41,7 @@ class Orders extends Model
 
         if(count($errors)>0){
 
-            return [$errors, "error creating order"];
+            return [$errors, "error"];
         }else{
 
             $this->id =$this->insert();

@@ -174,6 +174,12 @@ class Basket {
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 var response = eval('(' + this.responseText + ')');
+                if(response.result == "success"){
+                    window.location.replace("/order?params="+this.responseText);
+                }else{
+                    self.handlerError(response);
+                }
+                //window.location.replace("/order?params="+this.responseText);
             }
         };
 
@@ -183,6 +189,15 @@ class Basket {
 
     }
 
+    handlerError(result){
+
+        let message="";
+        for(let i=0;i<result[0].length;i++){
+            message+=result[0][i][0]+ " " +result[0][i][2] + "\n";
+        }
+
+        alert("error creating the order \n"+message)
+    }
 
     loadPaymentMethods(){
         let table = document.getElementById(this.tableId);
