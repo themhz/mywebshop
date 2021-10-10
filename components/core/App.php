@@ -25,6 +25,7 @@ use mywebshop\components\handlers\Request;
 use mywebshop\components\handlers\Response;
 use mywebshop\components\handlers\Session;
 use mywebshop\components\core\Router;
+use mywebshop\models\User;
 
 /**
  * About
@@ -56,6 +57,7 @@ class App
         $this->response = new Response();
         $this->session = new Session();
         $this->certificate = new Certificate();
+        $this->user = new User();
         
     }
 

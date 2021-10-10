@@ -43,8 +43,9 @@ class Controller extends baseController{
         $product = $product->select(['id ='=>$requestparams['product_id']])[0];
         $product->images =  $ProductImages->select(['product_id ='=>$requestparams['product_id']]);
 
+        $product->user = $this->app->user;
         $view = new view($this->app->request);
-        echo $view->render('inner', $this->app->request->path() , $product);
+        echo $view->render('inner', $this->app->request->path(), $product, 'public');
     }
 
     public function put(){

@@ -17,7 +17,7 @@ class Controller extends baseController
     {
 
 
-        
+
         //$register = new UserRegister();
         // $params = $this->app->body();
 
@@ -26,18 +26,21 @@ class Controller extends baseController
         // //  print_r($_SESSION);
         //   echo '<pre>';
         //   die();
-        
-        $view = new view($this->app);
-        echo $view->render('main', 'test', $this->app->session->get('userdetails'), 'admin');
+
+        //$view = new view($this->app);
+        //echo "ok";
+        //die();
+        //echo $view->render('main', 'main', $this->app->user, 'public');
+        header('Location: ' . 'main');
     }
 
     public function get()
     {
 
-        $this->checkLogout();
+         $this->checkLogout();
       
          $view = new view();
-         echo $view->render('main', 'login', [], 'public');
+         echo $view->render('user', 'login', [ "user"=>$this->app->user], 'public');
     }
 
     public function put()

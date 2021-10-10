@@ -32,9 +32,12 @@ class View
     public function render($layout = 'main', $view = "", $params = [], $acceess = 'public')
     {
 
-        $layoutContent = $this->layout($layout, $params);        
+        $layoutContent = $this->layout($layout, $params);
 
+        $headerContent = $this->header($params);
         $viewContent = $this->view($view, $params, $acceess);
+
+        $layoutContent = str_replace('{{HEADER}}', $headerContent, $layoutContent);
         return str_replace('{{VIEW}}', $viewContent, $layoutContent);
     }
 
@@ -66,6 +69,16 @@ class View
         }
         ob_start();
         include_once "views/" . $acceess . "Pages/$view/view.php";
+        return ob_get_clean();
+    }
+
+    protected function header($params)
+    {
+        foreach ($params as $key => $value) {
+            $$key = $value;
+        }
+        ob_start();
+        include_once "views/layouts/header.php";
         return ob_get_clean();
     }
 }

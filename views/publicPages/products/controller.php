@@ -30,10 +30,10 @@ class Controller extends baseController{
         $p = new Products();
         $products = $p->getProductsByCategory($requestparams);
               
-        
+        $products["user"] = $this->app->user;
         
         $view = new view($this->app->request);
-            echo $view->render('inner', $this->app->request->path() , $products);
+            echo $view->render('inner', 'products', $products,'public');
     }
 
     public function put(){
