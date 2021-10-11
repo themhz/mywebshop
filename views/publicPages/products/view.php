@@ -26,7 +26,7 @@
                 </div>
                 <div class="product-price">
                     <h3><span>&euro;</span><?php echo $rows->price ?></h3>
-                    <a class="btn" href=""><i class="fa fa-shopping-cart"></i>προσθήκη στο καλάθι</a>
+                    <button class="btn" onclick="addToBasket('<?php echo $rows->id ?>', '<?php echo $rows->name ?>','<?php echo $rows->price ?>')"><i class="fa fa-shopping-cart"></i>προσθήκη στο καλάθι</button>
                 </div>
             </div>
         </div>
@@ -44,6 +44,7 @@
     </ul>
 </nav>
 <script>
+
     let page = 1;
     let pages = <?php echo $params[1] ?>;
     setShowMoreButtonText();
@@ -130,7 +131,13 @@
         var results = regex.exec(url);
         return results == null ? null : results[1];
     }
+
+    function addToBasket(id, name, price){
+        basket.addToBasket(id, name, price);
+    }
 </script>
+
+
 <!-- <div class="col-md-12">
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">

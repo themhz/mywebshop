@@ -33,23 +33,11 @@ class Controller extends baseController
 
     public function post()
     {
-
-        $session = new Session();
         //Calculate total budget
         $basket = $this->app->request->body();
 
-//        print_r($basket);
-//        die();
-        //print_r($session->getAll());
-//        foreach($products as $product){
-//            echo $product->id."\n";
-//            echo $product->name."\n";
-//            echo $product->qty."\n";
-//            echo $product->price."\n";
-//        }
-
         //Create the order
-         $order = new Orders();
+         $order = new Orders($this->app->user->id);
          $result = $order->create($basket);
 
 
@@ -59,22 +47,6 @@ class Controller extends baseController
          }else{
              $this->respond($result);
          }
-
-
-
-
-
-
-//        $order = new Order($this->app->session);
-//        $order->addProducts($basket);
-
-        //echo $order->getId();
-//
-//        $order_items = new Order_items(1, 2);
-//        echo $order_items->getRegdate();
-
-        //$wsc = new WebServiceCaller();
-        //echo $wsc->send($products, $products);
 
     }
 

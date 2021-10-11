@@ -107,7 +107,7 @@ class Model
         return $results;
     }
 
-    public function update(): array
+    public function update($debug=false): array
     {
         $db = Database::getInstance();
         $sql = "update $this->__tablename set ";
@@ -132,7 +132,10 @@ class Model
         }
         $params['id'] = $this->id;
         $sql .= "where id = :id ";
-
+        if($debug == true){
+            echo $sql;
+            die();
+        }
         $sth = $db->dbh->prepare($sql);
 
         $sth->execute($params);
@@ -146,7 +149,7 @@ class Model
         }
     }
 
-    public function insert(): int
+    public function insert($debug=false): int
     {
         $db = Database::getInstance();
         $sql = "INSERT INTO $this->__tablename (";
@@ -155,7 +158,7 @@ class Model
         $params = array();
         $first = true;
         foreach ($this as $key => $value) {
-            if (!empty($value) && $key != 'id' && $key != '__tablename') {
+            if (!empty($value) && $key != '__tablename') {
                 $params += [$key => $value];
 
                 if ($first == true) {
@@ -171,7 +174,10 @@ class Model
         $sql .= ', regdate)';
         $sqlValues .= ' , :regdate)';
         $sql = $sql . $sqlValues;
-
+        if($debug == true){
+            echo $sql;
+            die();
+        }
         $sth = $db->dbh->prepare($sql);
         $params['regdate'] = date("Y-m-d H:i:s");
 
@@ -302,5 +308,45 @@ class Model
     public function calculateNumberOfPages($rows, $pagelength){
         $pages = $rows/$pagelength;
         return $pages;
+    }
+
+    public function delete(Array $params=[], $debug=false){
+        $db = Database::getInstance();
+        $sql = "DELETE from $this->__tablename ";
+
+        foreach ($params  as $key => $value) {
+            if ($first == true) {
+                $first = false;
+                $sql .= " where $key ";
+            } else {
+
+                $sql .= " $key ";
+            }
+
+            if (is_numeric($value)) {
+                $sql .= $value;
+            } else {
+                $sql .= "'" . $value . "'";
+            }
+        }
+
+        if($debug == true){
+            echo $sql;
+            die();
+        }
+
+        $sth = $db->dbh->prepare($sql);
+
+        $sth->execute($params);
+
+        $count = $sth->rowCount();
+
+        if ($count == '0') {
+            return ['result' => false];
+        } else {
+            return ['result' => true];
+        }
+
+
     }
 }

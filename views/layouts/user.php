@@ -41,17 +41,11 @@
         <div class="product-view" >
             <div class="container-fluid" >
                 <div class="row">
-                    <div class="col-lg-11" style="background:white;">
-                        <div class="row">
-
+                    <div class="col-lg-12" style="background:white;">
                             {{VIEW}}
-                        </div>
-
-                    </div>           
-                    
+                    </div>
                     <!-- Side Bar Start -->
                     <div class="col-lg-4 sidebar">
-                        
                         <div class="sidebar-widget widget-slider">
                             <div class="sidebar-slider normal-slider">
                                 <div class="product-item">

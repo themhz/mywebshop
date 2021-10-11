@@ -1,11 +1,10 @@
 <?php
 
 namespace mywebshop\models;
-
 use mywebshop\components\core\Model;
 use \DateTime;
 
-class Xml_products extends Model
+class XmlProducts extends Model
 {
     public int $id;
     public string $code;

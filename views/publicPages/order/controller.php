@@ -40,8 +40,8 @@ class Controller extends baseController
 
     public function get()
     {
-
-        echo $this->view->render('user', 'order', [], 'public');
+        $user = $this->app->user;
+        echo $this->view->render('user', 'order', ['user'=>$user], 'public');
     }
 
     public function put()

@@ -270,7 +270,7 @@ class Basket {
         var td3 = document.createElement('td');
         td.appendChild(checkoutbtn);
 
-        td2.innerHTML = this.currency + this.total;
+        td2.innerHTML = this.currency + (Math.round(this.total * 100) / 100);
         td2.id = "total";
 
         td3.id = "vatrate";

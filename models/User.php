@@ -10,8 +10,10 @@ class User extends Model
     public string $firstname ="";
     public string $lastname ="";
     public string $phone = "";
-    public string $mobile = "";
     public string $email ="";
+    public string $address ="";
+    public string $city ="";
+    public string $zipcode ="";
     public string $password ="";
     public DateTime $regdate;
 

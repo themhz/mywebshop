@@ -4,11 +4,11 @@
         <div class="row">
             <div class="col-sm-6">
                 <i class="fa fa-envelope"></i>
-                <?php echo $user->email ?>
+                info@kipodomi-tools.gr
             </div>
             <div class="col-sm-6">
                 <i class="fa fa-phone-alt"></i>
-                <?php echo $user->phone ?>
+                210-4651518
             </div>
         </div>
     </div>
@@ -27,9 +27,9 @@
                 <div class="navbar-nav mr-auto">
                     <a href="/" class="nav-item nav-link active">Home</a>
                     <a href="products" class="nav-item nav-link active">Products</a>
-                    <a href="cart.html" class="nav-item nav-link">Cart</a>
-                    <a href="checkout.html" class="nav-item nav-link">Checkout</a>
-                    <a href="my-account.html" class="nav-item nav-link">My Account</a>
+                    <a href="basket" class="nav-item nav-link">Cart</a>
+                    <a href="basket" class="nav-item nav-link">Checkout</a>
+                    <a href="profile" class="nav-item nav-link">My Account</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More Pages</a>
                         <div class="dropdown-menu">
@@ -61,7 +61,7 @@
                             <div class="dropdown-menu">
 
 
-                                <a href="#" class="dropdown-item">Profile</a>
+                                <a href="/profile" class="dropdown-item">Profile</a>
                                 <a href="login?logout=1" class="dropdown-item">Logout</a>
                             </div>
                         </div>
@@ -84,24 +84,24 @@
                     </a>
                 </div>
             </div>
-            <!--                    <div class="col-md-6">-->
-            <!--                        <div class="search">-->
-            <!--                            <input type="text" placeholder="Search">-->
-            <!--                            <button><i class="fa fa-search"></i></button>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                    <div class="col-md-3">-->
-            <!--                        <div class="user">-->
-            <!--                            <a href="wishlist.html" class="btn wishlist">-->
-            <!--                                <i class="fa fa-heart"></i>-->
-            <!--                                <span>(0)</span>-->
-            <!--                            </a>-->
-            <!--                            <a href="basket" class="btn cart">-->
-            <!--                                <i class="fa fa-shopping-cart"></i>-->
-            <!--                                <span>(0)</span>-->
-            <!--                            </a>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
+                <div class="col-md-6">
+                    <div class="search">
+                        <input type="text" placeholder="Search">
+                        <button><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="user">
+                        <a href="#" class="btn wishlist">
+                            <i class="fa fa-heart"></i>
+                            <span>(0)</span>
+                        </a>
+                        <a href="basket" class="btn cart">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span>(0)</span>
+                        </a>
+                    </div>
+                </div>
         </div>
     </div>
 </div>

@@ -15,24 +15,25 @@ class Orders extends Model
     public string $shipping_postcode;
     public int $shipping_location_id;
     public int $payment_method_id;
-    public int $shipment_method_id;
+    public int $shipping_method_id;
     public float $amount;
     public float $amount_with_tax;
 
-    public function __construct()
+    public function __construct($user_id)
     {
+        $this->user_id = $user_id;
         parent::__construct('orders');
     }
 
     public function create($basket) : array{
 
-        $this->user_id = -1; //unknown or not logged in-1
+        //$this->user_id = -1; //unknown or not logged in-1
         $this->email = $basket["email"]->email;
         $this->shipping_address = $basket["address"]->address;
         $this->shipping_postcode= $basket["zipcode"]->zipcode;
         $this->shipping_location_id = $basket["location"]->location;
         $this->payment_method_id = $basket["paymentMethod"]->paymentMethod;
-        $this->shipment_method_id = $basket["shippingMethod"]->shippingMethod;
+        $this->shipping_method_id = $basket["shippingMethod"]->shippingMethod;
         $this->calculateTotalCost($basket);  //$this->amount;
         $this->calculateTotalCostWithTask($basket);  //$this->amount_with_tax;
 
@@ -98,7 +99,7 @@ class Orders extends Model
             ["shipping_postcode", "string", "required"],
             ["shipping_location_id", "integer", "required"],
             ["payment_method_id", "integer", "required"],
-            ["shipment_method_id", "integer", "required"],
+            ["shipping_method_id", "integer", "required"],
             ["amount", "double", "required"],
             ["amount_with_tax", "double", "required"],
         ];
