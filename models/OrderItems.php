@@ -17,7 +17,7 @@ class Order_items extends Model
      * @param $id
      * @param $order_id
      */
-    public function __construct($order_id)
+    public function __construct($order_id=null)
     {
         parent::__construct('order_items');
         $this->order_id = $order_id;
