@@ -4,7 +4,7 @@ use mywebshop\components\core\Controller as baseController;
 use mywebshop\components\core\View;
 use mywebshop\models\User;
 use mywebshop\models\Orders;
-use mywebshop\models\Order_items;
+use mywebshop\models\OrderItems;
 
 class Controller extends baseController{
     public function __construct($app) {
@@ -61,8 +61,18 @@ class Controller extends baseController{
         $orders = new Orders($this->app->user->id);
         $orders = $orders->select(["user_id ="=> $this->app->user->id]);
 
+        $orderItemsHolder = [];
+
+        foreach ($orders as $order){
+            $orderItems = new OrderItems($order->id);
+            $orderItemsHolder[$order->id] = $orderItems->select(["order_id ="=>$order->id]);
+
+        }
+
+        //$order_items->select([])
+
         $view = new view($this->app->request);
-        echo $view->render('user', 'profile', ['user'=>$this->app->user, 'orders'=>$orders], 'public');
+        echo $view->render('user', 'profile', ['user'=>$this->app->user, 'orders'=>$orders, 'orderitems'=>$orderItemsHolder], 'public');
     }
 
     public function put(){
@@ -72,4 +82,6 @@ class Controller extends baseController{
     public function delete(){
         echo "delete";
     }
+
+
 }

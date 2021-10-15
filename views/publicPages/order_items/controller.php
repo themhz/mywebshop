@@ -1,6 +1,6 @@
 <?php
 
-namespace mywebshop\views\publicPages\order;
+namespace mywebshop\views\publicPages\order_items;
 
 use mywebshop\components\core\Controller as baseController;
 use mywebshop\components\core\View;
@@ -8,7 +8,7 @@ use mywebshop\components\handlers\FileUploader;
 use mywebshop\models\Categories;
 use mywebshop\components\handlers\Request;
 use mywebshop\components\handlers\Order;
-use mywebshop\models\Order_items;
+use mywebshop\models\OrderItems;
 use mywebshop\models\PaymentMethods;
 use mywebshop\models\ShippingMethods;
 use SampleWebApp\models\Products;
@@ -21,27 +21,20 @@ class Controller extends baseController
     public function __construct($app)
     {
         parent::__construct($app);
-        $this->view = new view($this->app->request);
     }
 
     public function post()
     {
-        $products = $this->app->request->body();
-        echo "we create the order here";
-        //print_r($products);
-        //$order = new Order($this->app->session);
-        //$order->addProducts($products);
-        //echo $order->getId();
-
-        //$order_items = new Order_items(1, 2);
-        //echo $order_items->getRegdate();
 
     }
 
     public function get()
     {
-        $user = $this->app->user;
-        echo $this->view->render('user', 'order', ['user'=>$user], 'public');
+        $order = $this->app->request->body();
+
+        $order_items = new OrderItems();
+        $order_items = $order_items->select(["order_id="=>$order["order_id"]]);
+        $this->respond($order_items);
     }
 
     public function put()

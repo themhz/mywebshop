@@ -41,21 +41,21 @@
                     <div class="col-md-6">
                         <div class="header-slider normal-slider">
                             <div class="header-slider-item">
-                                <img src="../../userfiles/products/0m4401.jpg" style="width:600px;height:400px;" alt="Slider Image" />
+                                <img src="../../../userfiles/products/0m4401.jpg" style="width:600px;height:400px;" alt="Slider Image" />
                                 <div class="header-slider-caption">
                                     <p>Some text goes here that describes the image</p>
                                     <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
                                 </div>
                             </div>
                             <div class="header-slider-item">
-                                <img src="../../userfiles/products/1ed946dd.png" style="width:600px;height:400px;" alt="Slider Image" />
+                                <img src="../../../userfiles/products/1ed946dd.png" style="width:600px;height:400px;" alt="Slider Image" />
                                 <div class="header-slider-caption">
                                     <p>Some text goes here that describes the image</p>
                                     <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
                                 </div>
                             </div>
                             <div class="header-slider-item">
-                                <img src="../../userfiles/products/2b42549f.jpg" style="width:600px;height:400px;" alt="Slider Image" />
+                                <img src="../../../userfiles/products/2b42549f.jpg" style="width:600px;height:400px;" alt="Slider Image" />
                                 <div class="header-slider-caption">
                                     <p>Some text goes here that describes the image</p>
                                     <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
@@ -66,13 +66,13 @@
                     <div class="col-md-3">
                         <div class="header-img">
                             <div class="img-item">
-                                <img src="../../userfiles/products/0m5601.jpg" />
+                                <img src="../../../userfiles/products/0m5601.jpg" />
                                 <a class="img-text" href="">
                                     <p>Some text goes here that describes the image</p>
                                 </a>
                             </div>
                             <div class="img-item">
-                                <img src="../../userfiles/products/1045a07f6.jpg" />
+                                <img src="../../../userfiles/products/1045a07f6.jpg" />
                                 <a class="img-text" href="">
                                     <p>Some text goes here that describes the image</p>
                                 </a>

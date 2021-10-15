@@ -9,7 +9,7 @@ use mywebshop\components\handlers\Session;
 use mywebshop\models\Categories;
 use mywebshop\components\handlers\WebServiceCaller;
 use mywebshop\components\handlers\Order;
-use mywebshop\models\Order_items;
+use mywebshop\models\OrderItems;
 use mywebshop\models\PaymentMethods;
 use mywebshop\models\ShippingMethods;
 use mywebshop\models\Locations;
@@ -42,7 +42,7 @@ class Controller extends baseController
 
 
          if($result[1]=="success"){
-             $order_items = new Order_items($result[0]);
+             $order_items = new OrderItems($result[0]);
              $this->respond($order_items->create($basket));
          }else{
              $this->respond($result);

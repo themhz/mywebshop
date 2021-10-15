@@ -37,14 +37,7 @@ class Router
 
     public function resolve()
     {
-                
-      
-        //  echo "<pre>";
-        
-        // print_r($this->app->session->get('loggedin'));
-        //  echo "<pre>";
-        //  die();
-        //try {            
+
             if (!$this->checkIfPageIsAdmin()) {    
                               
                 $controller = '\mywebshop\views\publicPages\\' . $this->getController() . '\Controller';                
@@ -61,11 +54,6 @@ class Router
                 $this->app->error = "You can't access this page";
                 $this->loadErrorController();
             }
-        // } catch (\Throwable $e) {           
-        //     $this->app->response->setStatusCode(404);
-        //     $this->app->error = $e->getMessage();
-        //     $this->loadErrorController();
-        // }
     }
 
     public function userCanAccess()

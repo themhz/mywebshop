@@ -19,7 +19,7 @@ class Orders extends Model
     public float $amount;
     public float $amount_with_tax;
 
-    public function __construct($user_id)
+    public function __construct($user_id=-1)
     {
         $this->user_id = $user_id;
         parent::__construct('orders');

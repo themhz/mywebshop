@@ -13,13 +13,14 @@ class Controller extends baseController{
         
         $params = ['error'=> $this->app->error] + $this->app->request->body();
         $view = new view($this->app);
-        echo $view->render('main', 'error' , $params);
+        echo $view->render('error', 'error' , $params);
     }
 
     public function get(){
         $params = ['error'=>  $this->app->error] + $this->app->request->body();
+        $params['user'] = $this->app->user;
         $view = new view($this->app);
-        echo $view->render('main', 'error' , $params);
+        echo $view->render('error', 'error' , $params, 'public');
     }
 
     public function put(){

@@ -4,7 +4,7 @@ use mywebshop\components\core\Model;
 use mywebshop\models\products;
 use mywebshop\models\vatcodes;
 
-class Order_items extends Model
+class OrderItems extends Model
 {
     public int $order_id;
     public int $product_id;
@@ -17,7 +17,7 @@ class Order_items extends Model
      * @param $id
      * @param $order_id
      */
-    public function __construct($order_id=null)
+    public function __construct($order_id=-1)
     {
         parent::__construct('order_items');
         $this->order_id = $order_id;

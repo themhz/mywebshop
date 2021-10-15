@@ -59,38 +59,58 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="orders-tab" role="tabpanel" aria-labelledby="orders-nav">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead class="thead-dark">
-                                <tr>
-                                    <th>Κωδ</th>
-                                    <th>Διεύθυνση</th>
-                                    <th>Τρόπος πληρωμής</th>
-                                    <th>Τρόπος αποστολής</th>
-                                    <th>Ποσό</th>
-                                    <th>Ποσό με ΦΠΑ</th>
-                                    <th>Ημερομηνία παραγγελίας</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php foreach ($orders as $order){ ?>
-                                <tr>
-                                    <td><?php echo $order->id ?></td>
-                                    <td><?php echo $order->shipping_location_id ?> <?php echo $order->shipping_address ?> <?php echo $order->shipping_postcode ?></td>
-                                    <td><?php echo $order->payment_method_id ?></td>
-                                    <td><?php echo $order->shipping_method_id ?></td>
-                                    <td><?php echo $order->amount ?></td>
-                                    <td><?php echo $order->amount_with_tax ?></td>
-                                    <td><?php echo $order->regdate ?></td>
-                                    <td><button class="btn">View</button></td>
-                                </tr>
-                                <?php } ?>
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th>Κωδ</th>
+                                        <th>Διεύθυνση</th>
+                                        <th>Τρόπος πληρωμής</th>
+                                        <th>Τρόπος αποστολής</th>
+                                        <th>Ποσό</th>
+                                        <th>Ποσό με ΦΠΑ</th>
+                                        <th>Ημερομηνία παραγγελίας</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    foreach ($orders as $order){ ?>
+                                    <tr>
+                                        <td><?php echo $order->id ?></td>
+                                        <td><?php echo $order->shipping_location_id ?> <?php echo $order->shipping_address ?> <?php echo $order->shipping_postcode ?></td>
+                                        <td><?php echo $order->payment_method_id ?></td>
+                                        <td><?php echo $order->shipping_method_id ?></td>
+                                        <td><?php echo $order->amount ?></td>
+                                        <td><?php echo $order->amount_with_tax ?></td>
+                                        <td><?php echo $order->regdate ?></td>
+                                        <td><button class="btn" id="order-items<?php echo $order->id ?>-nav" data-toggle="pill" onclick="showOrderItems(<?php echo $order->id ?>)">View</button></td>
+                                    </tr>
+                                    <?php } ?>
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                                <br>
+                                <table id="order_items" class="table table-bordered" style="display: none">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th>Κωδ</th>
+                                        <th>Κωδ Προϊόντος</th>
+                                        <th>Ποσότητα</th>
+                                        <th>Ποσό</th>
+                                        <th>Ποσό με ΦΠΑ</th>
+                                        <th>Ημερομηνία παραγγελίας</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="order_items_tbody">
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
+
+
                     <div class="tab-pane fade" id="payment-tab" role="tabpanel" aria-labelledby="payment-nav">
                         <h4>Payment Method</h4>
                         <p>
@@ -122,13 +142,41 @@
 <!-- My Account End -->
 
 <script>
+
+    function showOrderItems(id){
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                let response = JSON.parse(this.responseText);
+                //console.log(response);
+                $("#order_items").show();
+                $("#order_items_tbody tr").remove();
+                for(i=0;i<response.length;i++){
+                    // console.log(response);
+                    $("#order_items_tbody").append( '<tr>' +
+                        `
+                            <td>${response[i].id}</td>
+                            <td>${response[i].product_id}</td>
+                            <td>${response[i].qty}</td>
+                            <td>${response[i].amount}</td>
+                            <td>${response[i].amount_with_tax}</td>
+                            <td>${response[i].regdate}</td>
+                        `
+                        +'</tr>' );
+                }
+            }
+        };
+        xhttp.open("GET", "order_items?order_id="+id, true);
+        xhttp.send();
+    }
     function updateAccount(){
         var xhttp = new XMLHttpRequest();
 
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 let response = JSON.parse(this.responseText);
-
+                console.log(response);
             }
         };
 

@@ -32,22 +32,21 @@ class View
     public function render($layout = 'main', $view = "", $params = [], $acceess = 'public')
     {
 
-        $layoutContent = $this->layout($layout, $params);
+        $layoutContent = $this->layout($layout, $params,"", $acceess);
 
-        $headerContent = $this->header($params);
+        $headerContent = $this->header($params, $acceess);
         $viewContent = $this->view($view, $params, $acceess);
 
         $layoutContent = str_replace('{{HEADER}}', $headerContent, $layoutContent);
         return str_replace('{{VIEW}}', $viewContent, $layoutContent);
     }
 
-    protected function layout($layout = 'main', $params=[], $menu = "")
+    protected function layout($layout = 'main', $params=[], $menu = "", $acceess =  'public')
     {
         foreach ($params as $key => $value) {
             $$key = $value;
         }
         //make the session variables available for the layout via the session object
-        // $session = 'session';
          $session = new Session();
        
          if(isset($session->getAll()['userdetails'] )){
@@ -58,7 +57,11 @@ class View
          
 
         ob_start();
-        include_once "views/layouts/$layout.php";
+         if($acceess=="public"){
+             include_once "views/layouts/public/$layout.php";
+         }else{
+             include_once "views/layouts/admin/$layout.php";
+         }
         return ob_get_clean();
     }
 
@@ -78,7 +81,7 @@ class View
             $$key = $value;
         }
         ob_start();
-        include_once "views/layouts/header.php";
+        include_once "views/layouts/public/header.php";
         return ob_get_clean();
     }
 }
