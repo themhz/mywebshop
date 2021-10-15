@@ -14,12 +14,9 @@ class Controller extends baseController{
     }
 
     public function get(){
-        //echo "this is the products";
-        
 
-                        
         $view = new view($this->app->request);
-        echo $view->render('main', 'register', []);
+        echo $view->render('user', 'register', ["user"=> $this->app->user], "public");
     }
 
     public function put(){

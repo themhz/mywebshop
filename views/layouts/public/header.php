@@ -49,7 +49,7 @@
 
 
                                 <a href="login" class="dropdown-item">Login</a>
-                                <a href="#" class="dropdown-item">Register</a>
+                                <a href="register" class="dropdown-item">Register</a>
                             </div>
                         </div>
                     </div>
