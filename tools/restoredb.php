@@ -13,14 +13,13 @@ $dbhost = CONFIG['db.host'];
 $dbh = new PDO("mysql:host=$dbhost;dbname=", $user, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8;",PDO::ATTR_PERSISTENT => true));
 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$dir    = 'C:\xampp\htdocs\mywebshop\db\\';
-$files1 = scandir($dir);
+$dir    = 'C:\xampp\htdocs\mywebshop\db\dumps\\';
+$files1 = array_values(array_diff(scandir($dir), array('..', '.')));
 
 foreach ($files1 as $file){
     if(strpos($file, '.sql') !== false)
-        $fileparts = explode("-", $file);
+        $fileparts = explode("_", $file);
         echo "Creating schema for ".$fileparts[0]."\n";
-        //if(!$file[0] == "information_schema" && !$fileparts[0] == "mysql" && !$fileparts[0] == "performance_schema"){
         if(!in_array($fileparts[0], array("information_schema", "mysql", "performance_schema"))){
             $sql = "CREATE DATABASE ".$fileparts[0];
             $sth = $dbh->prepare($sql);

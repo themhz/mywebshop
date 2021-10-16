@@ -21,5 +21,5 @@ $date = new \DateTime();
 //    exec("C:\\xampp\\mysql\\bin\\mysqldump --user=root --password= --result-file=\"C:\\xampp\\htdocs\\mywebshop\\db\\".$database."_".$date->format('Ymd_H_i_s').".sql\" $schema->Database");
 //}
 $database = "mywebshop";
-exec("C:\\xampp\\mysql\\bin\\mysqldump --user=root --password= --result-file=\"C:\\xampp\\htdocs\\mywebshop\\db\\".$database."_".$date->format('Ymd_H_i_s').".sql\" $database");
+exec("C:\\xampp\\mysql\\bin\\mysqldump --user=root --password= --result-file=\"C:\\xampp\\htdocs\\mywebshop\\db\\dumps\\".$database."_".$date->format('Ymd_H_i_s').".sql\" $database");
 
