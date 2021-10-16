@@ -57,11 +57,9 @@ class View
          
 
         ob_start();
-         if($acceess=="public"){
-             include_once "views/layouts/public/$layout.php";
-         }else{
-             include_once "views/layouts/admin/$layout.php";
-         }
+      
+        include_once "views/layouts/$layout.php";
+        
         return ob_get_clean();
     }
 
@@ -71,17 +69,20 @@ class View
             $$key = $value;
         }
         ob_start();
-        include_once "views/" . $acceess . "Pages/$view/view.php";
+        include_once "views/pages/$view/view.php";
         return ob_get_clean();
     }
 
-    protected function header($params)
+    protected function header($params, $acceess)
     {
         foreach ($params as $key => $value) {
             $$key = $value;
         }
         ob_start();
-        include_once "views/layouts/public/header.php";
+        
+       
+        include_once "views/layouts/header.php";
+          
         return ob_get_clean();
     }
 }

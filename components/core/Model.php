@@ -313,7 +313,7 @@ class Model
     public function delete(Array $params=[], $debug=false){
         $db = Database::getInstance();
         $sql = "DELETE from $this->__tablename ";
-
+        $first = true;
         foreach ($params  as $key => $value) {
             if ($first == true) {
                 $first = false;

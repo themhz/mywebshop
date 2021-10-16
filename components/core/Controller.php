@@ -24,8 +24,6 @@ namespace mywebshop\components\core;
  * 
  */
 
-use mywebshop\components\handlers\Request;
-
 abstract class Controller
 {
     protected $app;

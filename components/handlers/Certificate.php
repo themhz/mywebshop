@@ -25,13 +25,14 @@ use mywebshop\components\handlers\Session;
 class Certificate {
     public $certificate="";
     
-    public function __construct($key = ""){        
+    public function __construct($key = ""){    
+            
         if(!$key==""){
             $this->create($key);
         }else{
             $session = new Session();    
             $this->certificate = $session->get('certificate');
-        }
+        }       
     }
 
     public function isAuthorized(){

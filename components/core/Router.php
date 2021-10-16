@@ -40,11 +40,11 @@ class Router
 
             if (!$this->checkIfPageIsAdmin()) {    
                               
-                $controller = '\mywebshop\views\publicPages\\' . $this->getController() . '\Controller';                
+                $controller = '\mywebshop\views\pages\\' . $this->getController() . '\Controller';                
                 $this->loadController($controller);
                 
             } else if ($this->app->session->get('loggedin') && $this->userCanAccess()) {
-                $controller = '\mywebshop\views\adminPages\\' . $this->getAdminPath() . '\Controller';   
+                $controller = '\mywebshop\views\pages\\' . $this->getAdminPath() . '\Controller';   
                       
                 $this->loadController($controller);
                
@@ -64,8 +64,11 @@ class Router
 
     public function loadController($controller): void
     {        
+      
+        // echo $controller; //mywebshop\views\main\Controller
+        // die();
         $controller = new $controller($this->app);
-
+        
         if(!empty($controller->method && method_exists($controller, $controller->method))){
 
             $method = $controller->method;
@@ -79,7 +82,7 @@ class Router
 
     public function loadErrorController(): void
     {
-        $controller = '\mywebshop\views\publicPages\error\Controller';
+        $controller = '\mywebshop\views\error\Controller';
         $controller = new $controller($this->app);
         $controller->get();
     }
