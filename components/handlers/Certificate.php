@@ -35,7 +35,7 @@ class Certificate {
         }       
     }
 
-    public function isAuthorized(){
+    public function isAuthenticated(){
         if(empty($this->certificate)){
             return false;
         }else{
