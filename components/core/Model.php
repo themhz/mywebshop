@@ -20,15 +20,17 @@
 namespace mywebshop\components\core;
 
 use mywebshop\components\handlers\Database;
+use mywebshop\components\handlers\Validator;
 
 class Model
 {
 
     protected $__tablename;
-
-    public function __construct(string $tablename)
+    private $rules = [];
+    public function __construct(string $tablename, array $rules = [])
     {
         $this->__tablename = $tablename;
+        $this->rules = $rules;
     }
 
     public function loadData($data)
@@ -115,7 +117,7 @@ class Model
         $params = array();
         $first = true;
         foreach ($this as $key => $value) {
-            if (!empty($value) && $key != 'id' && $key != '__tablename') {
+            if (!empty($value) && $key != 'id' && $key != '__tablename' && $key != 'rules') {
                 $params += [$key => $value];
 
                 if ($first == true) {
@@ -158,7 +160,7 @@ class Model
         $params = array();
         $first = true;
         foreach ($this as $key => $value) {
-            if (!empty($value) && $key != '__tablename') {
+            if ($this->filterInsert($key, $value)) {
                 $params += [$key => $value];
 
                 if ($first == true) {
@@ -349,4 +351,31 @@ class Model
 
 
     }
+
+    public function validate() : array{
+
+        $errors = [];
+        $validator = new Validator();
+        foreach($this->rules as $rules){
+            foreach($rules[1] as $rule){
+
+
+                $obj = $validator->selectValidation($rule);
+                if(!$obj->validate($this->{$rules[0]})){
+                    array_push($errors, $rules[1]);
+                }
+            }
+        }
+
+        return $errors;
+    }
+
+    public function filterInsert($key, $value) : bool{
+        return !empty($value) &&
+            $key != '__tablename' &&
+            $key != 'rules'  &&
+            $key != 'id'
+            ;
+    }
+
 }

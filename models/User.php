@@ -15,16 +15,14 @@ class User extends Model
     public string $city ="";
     public string $zipcode ="";
     public string $password ="";
+    public string $sessionid ="";
     public DateTime $regdate;
 
     public function __construct()
     {
-        parent::__construct('users');
+        parent::__construct('users', $this->getRules());
+
     }
-
-    
-
-    
 
     /**
      * Get the value of id
@@ -107,26 +105,6 @@ class User extends Model
     }
 
     /**
-     * Get the value of mobile
-     */ 
-    public function getMobile()
-    {
-        return $this->mobile;
-    }
-
-    /**
-     * Set the value of mobile
-     *
-     * @return  self
-     */ 
-    public function setMobile($mobile)
-    {
-        $this->mobile = $mobile;
-
-        return $this;
-    }
-
-    /**
      * Get the value of email
      */ 
     public function getEmail()
@@ -146,25 +124,6 @@ class User extends Model
         return $this;
     }
 
-    /**
-     * Get the value of username
-     */ 
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * Set the value of username
-     *
-     * @return  self
-     */ 
-    public function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
-    }
 
     /**
      * Get the value of password
@@ -186,23 +145,14 @@ class User extends Model
         return $this;
     }
 
-//    /**
-//     * Get the value of regdate
-//     */
-//    public function getRegdate()
-//    {
-//        return $this->regdate;
-//    }
 
-    /**
-     * Set the value of regdate
-     *
-     * @return  self
-     */ 
-    public function setRegdate($regdate)
-    {
-        $this->regdate = $regdate;
-
-        return $this;
+    public function getRules() : array{
+        return [
+            ["firstname", ["string", "required"]],
+            ["lastname", ["string", "required"]],
+            ["email", ["email", "required", "unique"]],
+            ["phone", ["string", "required"]],
+            ["password", ["password", "required"]]
+        ];
     }
 }

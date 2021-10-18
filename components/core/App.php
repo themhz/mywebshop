@@ -74,7 +74,6 @@ class App
     {      
         // 1. Load requested HTTP Method [get,post,etc..] and fields from the request or messagebody
         $this->loadRequest();
-       
         
         // 2. Authenticate the user request get userData and paths and set user session variables
         $this->authenticate();        

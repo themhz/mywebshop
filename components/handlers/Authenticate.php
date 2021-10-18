@@ -40,23 +40,38 @@ class Authenticate extends User
     {
         if($this->isAuthenticated()) {
             $this->setUserDetailsFromCertificate();
-        } else {
-            $this->checkUserNameAndPassword();               
         }
     }
 
     public function isAuthenticated(): bool
-    {             
-        $cert = $this->app->certificate;
-        return $cert->isAuthenticated();
+    {
+        $user = new User();
+        $this->isAuthenticated = false;
+        if(!empty($this->app->session->get("userdetails"))){
+            $selectedResult = $user->select(["sessionid ="=> $this->app->session->get("userdetails")->sessionid]);
+            if($selectedResult[0]->sessionid == $this->app->session->get("userdetails")->sessionid){
+
+                $this->isAuthenticated = true;
+                $this->setUserDetailsAndCreateCertificate($selectedResult);
+            }
+        }
+
+        return $this->isAuthenticated;
     }
     
-    public function checkUserNameAndPassword(): void
+    public function checkUserNameAndPassword(): bool
     {
         if ($this->hasUserNameAndPass()) {
-            $result = $this->select(['email =' => $this->app->request->body()['email']]);      
+            $result = $this->findUserEmail();
             $this->verifyUserNameAndPassword($result);
+            return $this->isAuthenticated;
+        }else{
+            return false;
         }
+    }
+
+    public function findUserEmail() :array{
+        return $this->select(['email =' => $this->app->request->body()['email']]);
     }
 
     public function hasUserNameAndPass(): bool
@@ -72,7 +87,7 @@ class Authenticate extends User
     {
         $passwordManager = new PasswordManager($this->app->request->body()['password']);
         if (isset($result[0]) && $passwordManager->verify($result[0]->password)) {
-            $this->isAuthenticated = true;            
+            $this->isAuthenticated = true;
             $this->setUserDetailsAndCreateCertificate($result);
         } else {
             $this->isAuthenticated = false;            
@@ -82,7 +97,7 @@ class Authenticate extends User
 
     public function setUserDetailsAndCreateCertificate($result){
         $this->setUserDetails($result[0]);
-        $this->createCertificate(session_id());
+        //$this->createCertificate(session_id());
     }
 
     public function setUserDetails($details): void
@@ -104,7 +119,8 @@ class Authenticate extends User
         $this->app->session = $session;
         $this->isAuthenticated = true;
         $this->app->isloggedin = true;
-        $this->app->certificate = $session->get('certificate');
+        //$this->app->certificate = $session->get('certificate');
+        $this->createCertificate(session_id());
         $this->app->user = $session->get('userdetails');
     }
 

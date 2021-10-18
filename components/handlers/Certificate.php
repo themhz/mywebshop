@@ -48,6 +48,10 @@ class Certificate {
         $session = new Session();
         $session->set('certificate', $key);
         $this->certificate = $session->get('certificate');
+        $user = new User();
+        $user->id =$session->get("userdetails")->id;
+        $user->sessionid =$key;
+        $user->update();
         return $this;
     }
 

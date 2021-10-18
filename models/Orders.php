@@ -76,11 +76,7 @@ class Orders extends Model
     public function validate() : array{
 
         $errors = [];
-
         foreach($this->rules() as $rule){
-
-            //echo $this->{$rule[0]}." ".gettype($this->{$rule[0]})."\n";
-
             if((empty($this->{$rule[0]}) && $rule[2] =="required") ){
                 array_push($errors, $rule);
             }

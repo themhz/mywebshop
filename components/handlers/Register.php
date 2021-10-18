@@ -19,16 +19,20 @@
 
 namespace mywebshop\components\handlers;
 
-use mywebshop\models\User as UserModel;
+use mywebshop\components\handlers\PasswordManager;
+use mywebshop\models\User;
 use mywebshop\components\Handlers\Request;
 
-class Register
+class Register extends User
 {
 
-    public $result;
+    private $result;
+    private $app;
 
-    public function __construct()
-    {        
+    public function __construct($app)
+    {
+        parent::__construct();
+        $this->app = $app;
     }
     /**
      * Register the user
@@ -37,17 +41,22 @@ class Register
      */
     public function register()
     {
-        $user = new UserModel();
-        $userrbody = $this->request->body();
+        $userrbody = $this->app->request->body();
+        $passwordManager =  new PasswordManager($userrbody["password"]);
+        $userrbody["password"] = $passwordManager->hash();
+        $this->loadData($userrbody);
 
-        if (isset($userrbody['username']) && isset($userrbody['password'])) {
 
-            $user->firstname = "tasos";
-            $user->lastname = "vagelis";
+        $result = $this->validate();
+        if(count($result) == 0){
+            $this->insert();
+            echo "success in registration";
+        }else{
+            echo "error in registration \n";
+            print_r($result);
         }
 
 
-        $user->insert();
     }
 
     /**

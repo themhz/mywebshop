@@ -69,9 +69,7 @@
         let lastname = document.querySelector("#lastname").value;
         let email = document.querySelector("#email").value;
         let phone = document.querySelector("#phone").value;
-        let passwrod = document.querySelector("#password").value;
-
-
+        let password = document.querySelector("#password").value;
 
         let userDetails = JSON.stringify({
             "firstname": firstname,

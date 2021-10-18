@@ -5,6 +5,7 @@ namespace mywebshop\views\pages\login;
 use mywebshop\components\core\Controller as baseController;
 use mywebshop\components\core\View;
 use mywebshop\components\handlers\Session;
+use mywebshop\components\handlers\Authenticate;
 
 class Controller extends baseController
 {
@@ -18,20 +19,17 @@ class Controller extends baseController
 
 
 
-        //$register = new UserRegister();
-        // $params = $this->app->body();
+         //$params = $this->app->request->body();
+        $authenticate = new Authenticate($this->app);
+        $result = $authenticate->checkUserNameAndPassword();
+        if($result==true){
+            header('Location: ' . 'main');
+        }else{
+            $view = new view();
+            echo $view->render('user', 'error', ["user"=>$this->app->user, "error"=>"wrong username or password"], 'public');
+        }
 
-        //  echo '<pre>';
-        //   print_r($this->app->session['userdetails']);
-        // //  print_r($_SESSION);
-        //   echo '<pre>';
-        //   die();
 
-        //$view = new view($this->app);
-        //echo "ok";
-        //die();
-        //echo $view->render('main', 'main', $this->app->user, 'public');
-        header('Location: ' . 'main');
     }
 
     public function get()
