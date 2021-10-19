@@ -16,17 +16,18 @@ class Controller extends baseController
 
     public function post()
     {
-        $params = $this->app->request->body();
         $authenticate = new Authenticate($this->app);
         $result = $authenticate->checkUserNameAndPassword();
-        $authenticate->setUserDetailsAndCreateCertificate($this->app->session->getAll()["userdetails"]);
+
         if($result==true){
+            $authenticate->setUserDetailsAndCreateCertificate($this->app->session->getAll()["userdetails"]);
             $this->app->user->update(false, ["firstname", "lastname","phone","email","address","city","zipcode","password","regdate"]);
             $view = new view();
             echo $view->render('main', 'main', ["user"=>$this->app->user], 'public');
         }else{
             $view = new view();
             echo $view->render('user', 'error', ["user"=>$this->app->user, "error"=>"wrong username or password"], 'public');
+
         }
     }
 
