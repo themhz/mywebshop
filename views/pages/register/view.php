@@ -1,3 +1,7 @@
+<!-- Button trigger modal -->
+
+<button class="btn btn-primary" data-toggle="modal" onclick="clickme()">click me</button>
+
 <!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron" style="background:transparent !important">
     <div class="container-fluid">
@@ -46,6 +50,10 @@
     }
 </style>
 <script>
+    function clickme(){
+        //showError("You have an error", "error that happend");
+        showWarning("Hello", "Hello themi");
+    }
     window.addEventListener('load', function () {
         $("#toggle_pwd").click(function() {         
             $(this).toggleClass("fa-eye fa-eye-slash");

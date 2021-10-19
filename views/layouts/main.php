@@ -187,6 +187,7 @@
         <script src="views/layouts/js/main.js"></script>
         <script src="views/layouts/js/menu.js"></script>
         <script src="views/layouts/js/basket.js"></script>
+        <script src="views/layouts/js/messages.js"></script>
         <script defer>
             let menu = new Menu();
             let basket = new Basket();
