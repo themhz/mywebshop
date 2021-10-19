@@ -16,7 +16,7 @@ class User extends Model
     public string $zipcode ="";
     public string $password ="";
     public string $sessionid ="";
-    public DateTime $regdate;
+    public string $regdate;
 
     public function __construct()
     {

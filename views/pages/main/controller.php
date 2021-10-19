@@ -28,7 +28,6 @@ class Controller extends baseController
     {
 
         $view = new view($this->app->request);
-
         echo $view->render('main', 'main', ["user"=>$this->app->user], 'public');
     }
 

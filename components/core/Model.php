@@ -38,8 +38,13 @@ class Model
 
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
+
                 if (isset($value)) {
-                    $this->{$key} = $value;
+//                    if(strtotime($value)){
+//                        $this->{$key} = new \DateTime( $value. ' GMT');
+//                    }else{
+                        $this->{$key} = $value;
+                    //}
                 }
             }
         }
@@ -109,15 +114,16 @@ class Model
         return $results;
     }
 
-    public function update($debug=false): array
+    public function update($debug=false, $dontupdate = []): array
     {
         $db = Database::getInstance();
         $sql = "update $this->__tablename set ";
 
         $params = array();
         $first = true;
+
         foreach ($this as $key => $value) {
-            if (!empty($value) && $key != 'id' && $key != '__tablename' && $key != 'rules') {
+            if ($key != 'id' && $key != '__tablename' && $key != 'rules' && !in_array($key, $dontupdate)) {
                 $params += [$key => $value];
 
                 if ($first == true) {
@@ -132,6 +138,7 @@ class Model
         if (empty($this->id)) {
             return ['result' => false];
         }
+
         $params['id'] = $this->id;
         $sql .= "where id = :id ";
         if($debug == true){
@@ -139,7 +146,6 @@ class Model
             die();
         }
         $sth = $db->dbh->prepare($sql);
-
         $sth->execute($params);
 
         $count = $sth->rowCount();

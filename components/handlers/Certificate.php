@@ -46,6 +46,7 @@ class Certificate {
     public function create($key){
 
         $session = new Session();
+
         $session->set('certificate', $key);
         $this->certificate = $session->get('certificate');
         $user = new User();

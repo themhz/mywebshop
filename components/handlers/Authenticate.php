@@ -21,7 +21,7 @@ namespace mywebshop\components\handlers;
 
 
 use mywebshop\components\handlers\PasswordManager;
-use mywebshop\components\handlers\Paths;
+
 use mywebshop\models\User;
 
 class Authenticate extends User
@@ -39,24 +39,31 @@ class Authenticate extends User
     public function authenticate(): void
     {
         if($this->isAuthenticated()) {
-            $this->setUserDetailsFromCertificate();
+
+            $this->setUserDetailsFromSession();
         }
     }
 
     public function isAuthenticated(): bool
     {
-        $user = new User();
-        $this->isAuthenticated = false;
-        if(!empty($this->app->session->get("userdetails"))){
-            $selectedResult = $user->select(["sessionid ="=> $this->app->session->get("userdetails")->sessionid]);
-            if($selectedResult[0]->sessionid == $this->app->session->get("userdetails")->sessionid){
-
+        if($this->userDetailsIsSet()){
+            $selectedResult = $this->getUserBySessionId();
+            if(!empty($selectedResult[0]) && $selectedResult[0]->sessionid == $this->app->session->get("userdetails")->sessionid){
                 $this->isAuthenticated = true;
-                $this->setUserDetailsAndCreateCertificate($selectedResult);
+                $this->setUserDetailsAndCreateCertificate($selectedResult[0]);
+
             }
         }
 
         return $this->isAuthenticated;
+    }
+
+    public function userDetailsIsSet(): bool{
+        return !empty($this->app->session->get("userdetails"));
+    }
+
+    public function getUserBySessionId():array{
+        return $this->select(["sessionid ="=> $this->app->session->get("userdetails")->sessionid]);
     }
     
     public function checkUserNameAndPassword(): bool
@@ -64,6 +71,7 @@ class Authenticate extends User
         if ($this->hasUserNameAndPass()) {
             $result = $this->findUserEmail();
             $this->verifyUserNameAndPassword($result);
+
             return $this->isAuthenticated;
         }else{
             return false;
@@ -85,49 +93,40 @@ class Authenticate extends User
 
     public function verifyUserNameAndPassword($result): void
     {
+
         $passwordManager = new PasswordManager($this->app->request->body()['password']);
+
         if (isset($result[0]) && $passwordManager->verify($result[0]->password)) {
             $this->isAuthenticated = true;
-            $this->setUserDetailsAndCreateCertificate($result);
+            $this->setUserDetailsAndCreateCertificate($result[0]);
         } else {
             $this->isAuthenticated = false;            
         }
         
     }
 
-    public function setUserDetailsAndCreateCertificate($result){
-        $this->setUserDetails($result[0]);
-        //$this->createCertificate(session_id());
+    public function setUserDetailsAndCreateCertificate($result):void{
+
+        $this->setUserDetails($result);
     }
 
     public function setUserDetails($details): void
     {
-        $session = new Session();
-        $session->set('userdetails', $details);
-                
-        $paths = new Paths($details);
-        $session->set('paths', $paths->get($details));
-        $session->set('loggedin', $this->isAuthenticated);
-        
-        $this->app->userPaths = $paths;
-        $this->app->session = $session;
+
+        $details->sessionid = $this->app->session->getId();
+        $this->app->session->set('userdetails', $details);
+        $this->app->session->set('loggedin', $this->isAuthenticated);
+
+        $this->setUserDetailsFromSession();
     }
 
-    public function setUserDetailsFromCertificate(){
-        $session = new Session();
-        $this->app->userPaths = new Paths($session->get('userdetails'));
-        $this->app->session = $session;
+    public function setUserDetailsFromSession(){
         $this->isAuthenticated = true;
         $this->app->isloggedin = true;
-        //$this->app->certificate = $session->get('certificate');
-        $this->createCertificate(session_id());
-        $this->app->user = $session->get('userdetails');
+        $this->app->user->loadData($this->app->session->get('userdetails'));
+
     }
 
-    public function createCertificate($key): void
-    {
-        $this->app->certificate = new Certificate($key);
-    }
 
    
 }

@@ -65,6 +65,11 @@ class Session
     public function clear(): void
     {
         session_unset();
+        session_destroy();
+
+        //session_reset();
+        //session_regenerate_id();
+
     }
 
     public function has(string $key): bool
@@ -77,6 +82,8 @@ class Session
     }
 
     public function getId(): string{
+
+        //session_regenerate_id();
         return session_id();
     }
 }

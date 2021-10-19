@@ -76,10 +76,13 @@ class App
         $this->loadRequest();
         
         // 2. Authenticate the user request get userData and paths and set user session variables
-        $this->authenticate();        
-             
+
+        $this->authenticate();
+
+
         // 3. Route the user to the corresponding controller
         $this->route();
+
     }
 
     public function loadRequest(): void
@@ -96,7 +99,8 @@ class App
     public function route(): void
     {
 
-        $router = new Router($this);        
+        $router = new Router($this);
+
         $router->resolve();
     }
 }

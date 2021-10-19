@@ -38,22 +38,34 @@ class Router
     public function resolve()
     {
 
-            if (!$this->checkIfPageIsAdmin()) {    
-                              
-                $controller = '\mywebshop\views\pages\\' . $this->getController() . '\Controller';                
-                $this->loadController($controller);
-                
-            } else if ($this->app->session->get('loggedin') && $this->userCanAccess()) {
-                $controller = '\mywebshop\views\pages\\' . $this->getAdminPath() . '\Controller';   
-                      
-                $this->loadController($controller);
-               
-            } else {
-                
+        try{
+            $controller = '\mywebshop\views\pages\\' . $this->getController() . '\Controller';
+            $this->loadController($controller);
+
+        }catch(\Exception $ex){
                 $this->app->response->setStatusCode(403);
                 $this->app->error = "You can't access this page";
                 $this->loadErrorController();
-            }
+        }
+
+
+
+//            if (!$this->checkIfPageIsAdmin()) {
+//
+//                $controller = '\mywebshop\views\pages\\' . $this->getController() . '\Controller';
+//                $this->loadController($controller);
+//
+//            } else if ($this->app->session->get('loggedin') && $this->userCanAccess()) {
+//                $controller = '\mywebshop\views\pages\\' . $this->getAdminPath() . '\Controller';
+//
+//                $this->loadController($controller);
+//
+//            } else {
+//
+//                $this->app->response->setStatusCode(403);
+//                $this->app->error = "You can't access this page";
+//                $this->loadErrorController();
+//            }
     }
 
     public function userCanAccess()
@@ -95,11 +107,6 @@ class Router
             return false;
         }
 
-        if (isset($paths[1]) && $paths[1] == 'admin') {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public function getAdminPath()

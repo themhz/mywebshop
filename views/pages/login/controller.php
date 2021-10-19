@@ -16,27 +16,23 @@ class Controller extends baseController
 
     public function post()
     {
-
-
-
-         //$params = $this->app->request->body();
+        $params = $this->app->request->body();
         $authenticate = new Authenticate($this->app);
         $result = $authenticate->checkUserNameAndPassword();
+        $authenticate->setUserDetailsAndCreateCertificate($this->app->session->getAll()["userdetails"]);
         if($result==true){
-            header('Location: ' . 'main');
+            $this->app->user->update(false, ["firstname", "lastname","phone","email","address","city","zipcode","password","regdate"]);
+            $view = new view();
+            echo $view->render('main', 'main', ["user"=>$this->app->user], 'public');
         }else{
             $view = new view();
             echo $view->render('user', 'error', ["user"=>$this->app->user, "error"=>"wrong username or password"], 'public');
         }
-
-
     }
 
     public function get()
     {
 
-         $this->checkLogout();
-      
          $view = new view();
          echo $view->render('user', 'login', [ "user"=>$this->app->user], 'public');
     }
@@ -51,15 +47,4 @@ class Controller extends baseController
         echo "delete";
     }
 
-
-    public function checkLogout()
-    {       
-        $params = (object)$this->app->request->body();
-        
-        if (isset($params->logout) && $params->logout == 1) {
-            $session = new Session();
-            $session->clear();
-            header('Location: ' . 'main');
-        }
-    }
 }

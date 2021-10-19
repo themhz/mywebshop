@@ -31,6 +31,7 @@ class PasswordManager
     }
 
     public function verify($hashed_password){
+
         return password_verify($this->password, $hashed_password);
     }
 

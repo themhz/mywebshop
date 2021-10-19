@@ -62,7 +62,7 @@
 
 
                                 <a href="/profile" class="dropdown-item">Profile</a>
-                                <a href="login?logout=1" class="dropdown-item">Logout</a>
+                                <a href="/logout" class="dropdown-item">Logout</a>
                             </div>
                         </div>
                     </div>
