@@ -23,6 +23,10 @@ function showWarning(title, message){
 }
 
 function setTitleAndMessage(title, message){
+    $('#alertMessageWindow_message').removeClass("bg-danger");
+    $('#alertMessageWindow_message').removeClass("bg-success");
+    $('#alertMessageWindow_message').removeClass("bg-warning");
+
     $('#alertMessageWindow_title').html(title);
     $('#alertMessageWindow_message').html(message);
 }

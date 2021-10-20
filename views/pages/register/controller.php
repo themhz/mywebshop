@@ -3,6 +3,7 @@ namespace mywebshop\views\pages\register;
 use mywebshop\components\core\Controller as baseController;
 use mywebshop\components\core\View;
 use mywebshop\components\handlers\Register;
+use mywebshop\components\handlers\Response;
 
 class Controller extends baseController{
     protected $app;
@@ -14,12 +15,11 @@ class Controller extends baseController{
 
     public function post(){
         $register = new Register($this->app);
-        $register->register();
-        //check if user email exists
-        //if not register and login else return error
+        $result = $register->register();
 
-//        echo "register post";
-//        print_r($this->app->request->body());
+        $response = new Response();
+        $response->respond($result);
+
     }
 
     public function get(){

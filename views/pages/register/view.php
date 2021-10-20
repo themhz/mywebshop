@@ -1,6 +1,3 @@
-<!-- Button trigger modal -->
-
-<button class="btn btn-primary" data-toggle="modal" onclick="clickme()">click me</button>
 
 <!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron" style="background:transparent !important">
@@ -17,7 +14,7 @@
                 </div>
                 <div class="col-md-6">
                     <label>E-mail</label>
-                    <input class="form-control" id="email" type="email" placeholder="E-mail">
+                    <input class="form-control" id="email" type="text" placeholder="E-mail">
                 </div>
                 <div class="col-md-6">
                     <label>Phone</label>
@@ -35,6 +32,7 @@
         </div>
     </div>
 </div>
+<button class="btn" onclick="correct()">test</button>
 <style type="text/css">
     #password, #toggle_pwd {
         
@@ -50,10 +48,7 @@
     }
 </style>
 <script>
-    function clickme(){
-        //showError("You have an error", "error that happend");
-        showWarning("Hello", "Hello themi");
-    }
+
     window.addEventListener('load', function () {
         $("#toggle_pwd").click(function() {         
             $(this).toggleClass("fa-eye fa-eye-slash");
@@ -68,8 +63,34 @@
 
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                let response = JSON.parse(this.responseText);
-                console.log(response);
+                try{
+                    clearErrors();
+                    let response = JSON.parse(this.responseText);
+
+                    if(response.result == 0){
+                        let message = `Error in registration `;
+                        for(let i=0;i<response.errors.length;i++) {
+                            for (let j = 0; j < response.errors[i].length; j++) {
+
+                                console.log(response.errors[i][0]);
+                                $("#"+response.errors[i][0]).addClass("errorfield");
+                            }
+                        }
+                        showError("Registration Error", message);
+                    }else{
+                        let message = `You have successfully registered into our system. Please view your e-mail for the confirmation e-mail `;
+                        clearErrors();
+                        showMessage("Success in registration", message);
+                    }
+
+
+                }catch(error){
+                    showMessage("Registration error", this.responseText);
+
+                }
+
+
+
             }
         };
 
@@ -91,4 +112,18 @@
         xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhttp.send(userDetails);
     }
+
+    function correct(){
+        $(".register-form :input").each(function(){
+            $(this).removeClass("alert-danger");
+        });
+    }
+
+    function clearErrors(){
+        $(".register-form :input").each(function(){
+
+            $(this).removeClass("errorfield");
+        });
+    }
+
 </script>

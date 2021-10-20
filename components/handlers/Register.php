@@ -39,23 +39,21 @@ class Register extends User
      *
      * @return array
      */
-    public function register()
+    public function register(): array
     {
         $userrbody = $this->app->request->body();
         $passwordManager =  new PasswordManager($userrbody["password"]);
-        $userrbody["password"] = $passwordManager->hash();
         $this->loadData($userrbody);
-
-
         $result = $this->validate();
-        if(count($result) == 0){
-            $this->insert();
-            echo "success in registration";
-        }else{
-            echo "error in registration \n";
-            print_r($result);
-        }
 
+        $this->password = $passwordManager->hash();
+
+        if(count($result) == 0){
+            $result = $this->insert();
+            return ["id"=>$result, "result"=>1];
+        }else{
+            return ["id"=>-1, "result"=>0, "errors"=>$result];
+        }
 
     }
 

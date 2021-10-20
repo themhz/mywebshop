@@ -14,6 +14,7 @@ class PasswordValidator implements Validator
         $containsDigit   = preg_match('/\d/',          $this->value);
         $containsSpecial = preg_match('/[^a-zA-Z\d]/', $this->value);
 
+
         return $containsLetter && $containsDigit && $containsSpecial;
 
     }

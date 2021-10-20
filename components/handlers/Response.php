@@ -18,10 +18,15 @@
 
 namespace mywebshop\components\handlers;
 
-//This is the response class that for now only returns the response code such as 404 or 200
 class Response
 {
     public function setStatusCode(int $code){
         http_response_code($code);
     }
+
+    public function respond($value): void{
+
+        echo json_encode($value);
+    }
+
 }

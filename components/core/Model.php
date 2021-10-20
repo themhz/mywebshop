@@ -368,7 +368,7 @@ class Model
 
                 $obj = $validator->selectValidation($rule);
                 if(!$obj->validate($this->{$rules[0]})){
-                    array_push($errors, $rules[1]);
+                    array_push($errors, [$rules[0], $rule]);
                 }
             }
         }
