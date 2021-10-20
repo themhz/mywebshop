@@ -32,12 +32,10 @@
         </div>
     </div>
 </div>
-<button class="btn" onclick="correct()">test</button>
+
 <style type="text/css">
     #password, #toggle_pwd {
-        
         display:inline-block;
-        
     }
     #password{
         width:80%;
