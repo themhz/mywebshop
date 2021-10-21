@@ -79,6 +79,7 @@ class Menu{
                 let a = document.createElement('a');
                 a.classList.add("nav-link");
                 a.href = "products?category="+element.id;
+
                 a.innerText = element.name + '('+element.num_of_products+')';
                 li.append(a);
             }
