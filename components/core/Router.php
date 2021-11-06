@@ -39,7 +39,7 @@ class Router
     {
 
         try{
-            $controller = '\mywebshop\views\pages\\' . $this->getController() . '\Controller';
+            $controller = '\mywebshop\views\pages\\' . $this->getController() . '\controller';
             $this->loadController($controller);
 
         }catch(\Exception $ex){
@@ -94,7 +94,7 @@ class Router
 
     public function loadErrorController(): void
     {
-        $controller = '\mywebshop\views\error\Controller';
+        $controller = '\mywebshop\\views\\error\\Controller';
         $controller = new $controller($this->app);
         $controller->get();
     }
